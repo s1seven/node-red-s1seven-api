@@ -1,0 +1,24 @@
+{
+  "name": "red-s1seven-api",
+  "version": "1.0.0",
+  "description": "Nodes that interact with S1Seven's API",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "eamon0989@gmail.com",
+  "license": "ISC",
+  "node-red": {
+    "nodes": {
+      "hash": "hash/hash.js"
+    }
+  },
+  "dependencies": {
+    "axios": "^0.27.2"
+  },
+  "devDependencies": {
+    "eslint": "^8.16.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0"
+  }
+}
