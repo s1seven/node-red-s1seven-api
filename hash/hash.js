@@ -1,5 +1,6 @@
-/* eslint-disable no-param-reassign */
 module.exports = function (RED) {
+    "use strict";
+
     const axios = require('axios');
     const baseUrl = 'https://app.s1seven.dev';
 
@@ -19,7 +20,6 @@ module.exports = function (RED) {
                         },
                     },
                 );
-
             return response;
         } catch (error) {
             return error;
@@ -40,22 +40,24 @@ module.exports = function (RED) {
                 try {
                     certificate = JSON.stringify(certificate);
                 } catch (error) {
-                    node.warn(error);
+                    node.error(error);
                     done(error);
                 }
             }
 
             if (!accessToken) {
                 node.warn('Please add an access token');
+                done();
             } else if (certificate && typeof certificate === 'string') {
                 const response = await getHash(certificate, accessToken, msg);
 
                 if (response instanceof Error) {
-                    node.warn(response);
+                    node.error(response);
                     done(response);
                 } else {
                     msg.payload = response.data;
                     send(msg);
+                    done();
                 }
             } else {
                 node.warn('Please add a valid JSON certificate to global.certificate or msg.payload');
