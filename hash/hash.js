@@ -1,30 +1,6 @@
 module.exports = function (RED) {
     "use strict";
-
-    const axios = require('axios');
-    const baseUrl = 'https://app.s1seven.dev';
-
-    async function getHash(certificate, accessToken) {
-        try {
-            const response = await axios
-                .post(
-                    `${baseUrl}/api/certificates/hash`,
-                    {
-                        algorithm: 'sha256',
-                        encoding: 'hex',
-                        source: certificate,
-                    },
-                    {
-                        headers: {
-                            Authorization: `Bearer ${accessToken}`,
-                        },
-                    },
-                );
-            return response;
-        } catch (error) {
-            return error;
-        }
-    }
+    const { getHashOfCertificate } = require('../services');
 
     function hashCertificate(config) {
         RED.nodes.createNode(this, config);
@@ -49,7 +25,7 @@ module.exports = function (RED) {
                 node.warn('Please add an access token');
                 done();
             } else if (certificate && typeof certificate === 'string') {
-                const response = await getHash(certificate, accessToken, msg);
+                const response = await getHashOfCertificate(certificate, accessToken, msg);
 
                 if (response instanceof Error) {
                     node.error(response);
