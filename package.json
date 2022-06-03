@@ -10,7 +10,8 @@
   "license": "ISC",
   "node-red": {
     "nodes": {
-      "hash": "hash/hash.js"
+      "hash": "hash/hash.js",
+      "verify": "verify/verify.js"
     }
   },
   "dependencies": {
