@@ -1,0 +1,29 @@
+<script type="text/javascript">
+    RED.nodes.registerType('api-config',{
+        category: 'config',
+        defaults: {
+            mode: {value:"",required:false},
+            accessToken: {value:"",required:false},
+            companyId: {value:"",required:false},
+        },
+        label: "API configuration"
+    });
+</script>
+
+<script type="text/html" data-template-name="api-config">
+    <div class="form-row">
+        <label for="node-config-input-mode"><i class="fa fa-bookmark"></i> Mode</label>
+        <select id="node-config-input-mode">
+            <option selected value="test">test</option>
+            <option value="live">live</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-accessToken"><i class="fa fa-bookmark"></i> Access Token</label>
+        <input type="text" id="node-config-input-accessToken">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-companyId"><i class="fa fa-bookmark"></i> Company Id</label>
+        <input type="text" id="node-config-input-companyId">
+    </div>
+</script>

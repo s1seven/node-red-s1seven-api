@@ -8,8 +8,10 @@ module.exports = function (RED) {
         const globalContext = this.context().global;
 
         node.on('input', async (msg, send, done) => {
+            const apiConfig = RED.nodes.getNode(config.apiConfig);
+
             let certificate = msg.payload || globalContext.get('certificate');
-            const mode = msg.mode || globalContext.get('mode');
+            const mode = msg.mode || apiConfig?.test;
 
             // Convert object to JSON if necessary
             if (certificate instanceof Object) {
@@ -23,7 +25,6 @@ module.exports = function (RED) {
 
             if (certificate && typeof certificate === 'string') {
                 const response = await verifyCertificate(certificate, mode);
-
                 if (response instanceof Error) {
                     node.error(response);
                     done(response);

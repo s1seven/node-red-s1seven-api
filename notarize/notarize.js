@@ -6,12 +6,14 @@ module.exports = function(RED) {
         RED.nodes.createNode(this,config);
         const node = this;
         const globalContext = this.context().global;
+        const apiConfig = RED.nodes.getNode(config.apiConfig);
 
         node.on('input', async (msg, send, done) => {
-            const accessToken = msg.accessToken || globalContext.get('accessToken');
-            const companyId = msg.companyId || globalContext.get('companyId');
+            const accessToken = msg.accessToken || apiConfig?.accessToken;
+            const companyId = msg.companyId || apiConfig?.companyId;
+            const mode = msg.mode || apiConfig?.test;
             const identity = msg.identity || globalContext.get('identity');
-            const certificate = msg.certificate || globalContext.get('certificate');
+            let certificate = msg.payload || globalContext.get('certificate');
 
             // Convert object to JSON if necessary
             if (certificate instanceof Object) {

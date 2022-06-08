@@ -6,10 +6,11 @@ module.exports = function (RED) {
         RED.nodes.createNode(this, config);
         const node = this;
         const globalContext = this.context().global;
+        const apiConfig = RED.nodes.getNode(config.apiConfig);
 
         node.on('input', async (msg, send, done) => {
             let certificate = msg.payload || globalContext.get('certificate');
-            const accessToken = msg.accessToken || globalContext.get('accessToken');
+            const accessToken = msg.accessToken || apiConfig?.accessToken;
 
             // Convert object to JSON if necessary
             if (certificate instanceof Object) {

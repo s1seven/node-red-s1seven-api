@@ -3,7 +3,8 @@
         category: 'function',
         color: '#a6bbcf',
         defaults: {
-            name: {value:""}
+            name: { value: ""},
+            apiConfig: { value: "", type: "api-config" }
         },
         inputs:1,
         outputs:1,
@@ -16,8 +17,16 @@
 
 <script type="text/html" data-template-name="verify certificate">
     <div class="form-row">
-        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
-        <input type="text" id="node-input-name" placeholder="Name">
+        <label for="node-input-testProp"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-testProp" placeholder="testProp">
+    </div>
+    <div class="form-row">
+        <label for="node-input-testProp"><i class="fa fa-tag"></i> testProp</label>
+        <input type="text" id="node-input-testProp" placeholder="testProp">
+    </div>
+    <div class="form-row">
+        <label for="node-input-apiConfig"><i class="fa fa-tag"></i> api config</label>
+        <input type="text" id="node-input-apiConfig" placeholder="api-config">
     </div>
 </script>
 
