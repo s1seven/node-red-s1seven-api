@@ -16,7 +16,7 @@ module.exports = function (RED) {
             const app = msg.app || apiConfig?.app;
 
             if (!accessToken) {
-                node.warn('Please add an access token');
+                node.warn(RED._("hash.errors.accessToken"));
                 done();
             } else if (certificate) {
                 try {
@@ -43,7 +43,7 @@ module.exports = function (RED) {
                     done(error);
                 }
             } else {
-                node.warn('Please add a valid JSON certificate to msg.payload or global.certificate');
+                node.warn(RED._("hash.errors.validCertificate"));
                 done();
             }
         });
