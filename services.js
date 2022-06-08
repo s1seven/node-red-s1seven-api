@@ -20,24 +20,6 @@ async function notarizeCertificate(certificate, accessToken, mode, company, iden
     }
 }
 
-async function verifyCertificate(certificate, mode) {
-    try {
-        const response = await axios.post(
-            `${BASE_URL}/api/certificates/verify/?mode=${mode ? mode : 'test'}`,
-            certificate,
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            }
-        );
-        return response;
-    } catch (error) {
-        return error;
-    }
-}
-
 module.exports = {
     notarizeCertificate,
-    verifyCertificate,
 };
