@@ -1,5 +1,5 @@
 module.exports = function (RED) {
-    "use strict";
+    'use strict';
     const { getHashOfCertificate } = require('../services');
 
     function hashCertificate(config) {

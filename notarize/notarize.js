@@ -1,9 +1,9 @@
-module.exports = function(RED) {
-    "use strict";
+module.exports = function (RED) {
+    'use strict';
     const { notarizeCertificate } = require('../services');
 
     function notarize(config) {
-        RED.nodes.createNode(this,config);
+        RED.nodes.createNode(this, config);
         const node = this;
         const globalContext = this.context().global;
         const apiConfig = RED.nodes.getNode(config.apiConfig);
@@ -51,5 +51,5 @@ module.exports = function(RED) {
             }
         });
     }
-    RED.nodes.registerType("notarize a certificate", notarize);
-}
+    RED.nodes.registerType('notarize a certificate', notarize);
+};

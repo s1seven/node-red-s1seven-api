@@ -1,5 +1,5 @@
 module.exports = function (RED) {
-    "use strict";
+    'use strict';
     const { verifyCertificate } = require('../services');
 
     function verifyCertificateNode(config) {
