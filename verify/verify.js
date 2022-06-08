@@ -13,12 +13,13 @@ module.exports = function (RED) {
             const apiConfig = RED.nodes.getNode(config.apiConfig);
             let certificate = msg.payload || globalContext.get('certificate');
             const mode = msg.mode || apiConfig?.test;
+            const app = msg.app || apiConfig?.app;
 
             if (certificate) {
                 try {
                     certificate = validateCertificate(certificate);
                     const response = await axios.post(
-                        `${BASE_URL}/api/certificates/verify/?mode=${mode ? mode : 'test'}`,
+                        `${BASE_URL}${app ? app : 'dev'}/api/certificates/verify/?mode=${mode ? mode : 'test'}`,
                         certificate,
                         {
                             headers: {

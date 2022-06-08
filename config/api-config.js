@@ -4,6 +4,7 @@ module.exports = function (RED) {
         this.companyId = n.companyId;
         this.accessToken = n.accessToken;
         this.mode = n.mode;
+        this.app = n.app;
     }
     RED.nodes.registerType('api-config', RemoteServerNode);
 };

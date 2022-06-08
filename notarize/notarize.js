@@ -15,6 +15,7 @@ module.exports = function (RED) {
             const companyId = msg.companyId || apiConfig?.companyId;
             const mode = msg.mode || apiConfig?.test;
             const identity = msg.identity || globalContext.get('identity');
+            const app = msg.app || apiConfig?.app;
             let certificate = msg.payload || globalContext.get('certificate');
 
             if (!accessToken) {
@@ -30,7 +31,7 @@ module.exports = function (RED) {
                 try {
                     certificate = validateCertificate(certificate);
                     const response = await axios.post(
-                        `${BASE_URL}/api/certificates/notarize/notarize?identity=${identity}&mode=${
+                        `${BASE_URL}${app ? app : 'dev'}/api/certificates/notarize/notarize?identity=${identity}&mode=${
                             mode ? mode : 'test'
                         }`,
                         certificate,

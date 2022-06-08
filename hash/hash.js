@@ -13,6 +13,7 @@ module.exports = function (RED) {
         node.on('input', async (msg, send, done) => {
             let certificate = msg.payload || globalContext.get('certificate');
             const accessToken = msg.accessToken || apiConfig?.accessToken;
+            const app = msg.app || apiConfig?.app;
 
             if (!accessToken) {
                 node.warn('Please add an access token');
@@ -21,7 +22,7 @@ module.exports = function (RED) {
                 try {
                     certificate = validateCertificate(certificate);
                     const response = await axios.post(
-                        `${BASE_URL}/api/certificates/hash`,
+                        `${BASE_URL}${app ? app : 'dev'}/api/certificates/hash`,
                         {
                             algorithm: 'sha256', // allow these to be configured
                             encoding: 'hex',
