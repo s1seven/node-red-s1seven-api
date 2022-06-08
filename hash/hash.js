@@ -39,7 +39,7 @@ module.exports = function (RED) {
                     done();
                 } catch (error) {
                     node.error(error);
-                    done(error);  
+                    done(error);
                 }
             } else {
                 node.warn('Please add a valid JSON certificate to msg.payload or global.certificate');

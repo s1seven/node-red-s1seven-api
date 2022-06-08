@@ -8,5 +8,4 @@ module.exports = function validateCertificate(certificate) {
     } else {
         throw new Error('Please add a valid certificate');
     }
-}
-
+};

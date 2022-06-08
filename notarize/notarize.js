@@ -30,7 +30,9 @@ module.exports = function (RED) {
                 try {
                     certificate = validateCertificate(certificate);
                     const response = await axios.post(
-                        `${BASE_URL}/api/certificates/notarize/notarize?identity=${identity}&mode=${mode ? mode : 'test'}`,
+                        `${BASE_URL}/api/certificates/notarize/notarize?identity=${identity}&mode=${
+                            mode ? mode : 'test'
+                        }`,
                         certificate,
                         {
                             headers: {
@@ -45,7 +47,7 @@ module.exports = function (RED) {
                     done();
                 } catch (error) {
                     node.error(error);
-                    done(error);  
+                    done(error);
                 }
             } else {
                 node.warn('Please add a valid JSON certificate to global.certificate or msg.payload');
