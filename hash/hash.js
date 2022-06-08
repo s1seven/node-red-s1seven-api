@@ -1,6 +1,8 @@
 module.exports = function (RED) {
     'use strict';
-    const { getHashOfCertificate } = require('../services');
+    const axios = require('axios');
+    const { BASE_URL } = require('../constants');
+    const validateCertificate = require('../utils/validateCertificate');
 
     function hashCertificate(config) {
         RED.nodes.createNode(this, config);
@@ -12,32 +14,35 @@ module.exports = function (RED) {
             let certificate = msg.payload || globalContext.get('certificate');
             const accessToken = msg.accessToken || apiConfig?.accessToken;
 
-            // Convert object to JSON if necessary
-            if (certificate instanceof Object) {
-                try {
-                    certificate = JSON.stringify(certificate);
-                } catch (error) {
-                    node.error(error);
-                    done(error);
-                }
-            }
-
             if (!accessToken) {
                 node.warn('Please add an access token');
                 done();
-            } else if (certificate && typeof certificate === 'string') {
-                const response = await getHashOfCertificate(certificate, accessToken, msg);
-
-                if (response instanceof Error) {
-                    node.error(response);
-                    done(response);
-                } else {
+            } else if (certificate) {
+                try {
+                    certificate = validateCertificate(certificate);
+                    const response = await axios.post(
+                        `${BASE_URL}/api/certificates/hash`,
+                        {
+                            algorithm: 'sha256', // allow these to be configured
+                            encoding: 'hex',
+                            source: certificate,
+                        },
+                        {
+                            headers: {
+                                Authorization: `Bearer ${accessToken}`,
+                                'Content-Type': 'application/json',
+                            },
+                        }
+                    );
                     msg.payload = response.data;
                     send(msg);
                     done();
+                } catch (error) {
+                    node.error(error);
+                    done(error);  
                 }
             } else {
-                node.warn('Please add a valid JSON certificate to global.certificate or msg.payload');
+                node.warn('Please add a valid JSON certificate to msg.payload or global.certificate');
                 done();
             }
         });
