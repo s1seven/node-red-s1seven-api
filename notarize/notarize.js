@@ -1,6 +1,8 @@
 module.exports = function (RED) {
     'use strict';
-    const { notarizeCertificate } = require('../services');
+    const axios = require('axios');
+    const { BASE_URL } = require('../constants');
+    const validateCertificate = require('../utils/validateCertificate');
 
     function notarize(config) {
         RED.nodes.createNode(this, config);
@@ -15,16 +17,6 @@ module.exports = function (RED) {
             const identity = msg.identity || globalContext.get('identity');
             let certificate = msg.payload || globalContext.get('certificate');
 
-            // Convert object to JSON if necessary
-            if (certificate instanceof Object) {
-                try {
-                    certificate = JSON.stringify(certificate);
-                } catch (error) {
-                    node.error(error);
-                    done(error);
-                }
-            }
-
             if (!accessToken) {
                 node.warn('Please add an access token');
                 done();
@@ -34,16 +26,26 @@ module.exports = function (RED) {
             } else if (!identity) {
                 node.warn('Please add an identity');
                 done();
-            } else if (certificate && typeof certificate === 'string') {
-                const response = await notarizeCertificate(certificate, accessToken, mode, companyId, identity);
-
-                if (response instanceof Error) {
-                    node.error(response);
-                    done(response);
-                } else {
+            } else if (certificate) {
+                try {
+                    certificate = validateCertificate(certificate);
+                    const response = await axios.post(
+                        `${BASE_URL}/api/certificates/notarize/notarize?identity=${identity}&mode=${mode ? mode : 'test'}`,
+                        certificate,
+                        {
+                            headers: {
+                                Authorization: `Bearer ${accessToken}`,
+                                'Content-Type': 'application/json',
+                                company: companyId,
+                            },
+                        }
+                    );
                     msg.payload = response.data;
                     send(msg);
                     done();
+                } catch (error) {
+                    node.error(error);
+                    done(error);  
                 }
             } else {
                 node.warn('Please add a valid JSON certificate to global.certificate or msg.payload');
