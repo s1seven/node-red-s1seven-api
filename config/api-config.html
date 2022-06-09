@@ -6,8 +6,11 @@
             app: { value: '', required: true },
             accessToken: { value: '', required: false },
             companyId: { value: '', required: false },
+            name: { value: '', required: false },
         },
-        label: 'API configuration',
+        label: function () {
+            return this.name || 'API configuration';
+        },
         icon: 's_icon_logo.svg',
     });
 </script>
@@ -34,5 +37,9 @@
     <div class="form-row">
         <label for="node-config-input-companyId"><i class="fa fa-bookmark"></i><span data-i18n="config.label.companyId"></label>
         <input type="text" id="node-config-input-companyId" />
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-name"><i class="fa fa-bookmark"></i><span data-i18n="config.label.name"></label>
+        <input type="text" id="node-config-input-name" />
     </div>
 </script>

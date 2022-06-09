@@ -5,6 +5,7 @@ module.exports = function (RED) {
         this.accessToken = n.accessToken;
         this.mode = n.mode;
         this.app = n.app;
+        this.name = n.name;
     }
     RED.nodes.registerType('api-config', RemoteServerNode);
 };
