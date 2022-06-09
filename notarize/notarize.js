@@ -19,13 +19,13 @@ module.exports = function (RED) {
             let certificate = msg.payload || globalContext.get('certificate');
 
             if (!accessToken) {
-                node.warn('Please add an access token');
+                node.warn(RED._('notarize.errors.accessToken'));
                 done();
             } else if (!companyId) {
-                node.warn('Please add a company id');
+                node.warn(RED._('notarize.errors.companyId'));
                 done();
             } else if (!identity) {
-                node.warn('Please add an identity');
+                node.warn(RED._('notarize.errors.identity'));
                 done();
             } else if (certificate) {
                 try {
@@ -51,7 +51,7 @@ module.exports = function (RED) {
                     done(error);
                 }
             } else {
-                node.warn('Please add a valid JSON certificate to global.certificate or msg.payload');
+                node.warn(RED._('notarize.errors.validCertificate'));
                 done();
             }
         });

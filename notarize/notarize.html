@@ -1,6 +1,6 @@
 <script type="text/javascript">
     RED.nodes.registerType('notarize a certificate', {
-        category: 'function',
+        category: 'network',
         color: '#a6bbcf',
         defaults: {
             name: { value: '' },
@@ -8,7 +8,7 @@
         },
         inputs: 1,
         outputs: 1,
-        icon: "s_icon_logo.svg",
+        icon: 's_icon_logo.svg',
         label: function () {
             return this.name || 'notarize a certificate';
         },
@@ -17,15 +17,13 @@
 
 <script type="text/html" data-template-name="notarize a certificate">
     <div class="form-row">
-        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <label for="node-input-name"><i class="fa fa-tag"></i><span data-i18n="notarize.label.name"></span></label>
         <input type="text" id="node-input-name" placeholder="Name" />
     </div>
     <div class="form-row">
-        <label for="node-input-apiConfig"><i class="fa fa-tag"></i> api config</label>
+        <label for="node-input-apiConfig"
+            ><i class="fa fa-tag"></i><span data-i18n="notarize.label.apiConfig"></span
+        ></label>
         <input type="text" id="node-input-apiConfig" placeholder="api-config" />
     </div>
-</script>
-
-<script type="text/html" data-help-name="notarize a certificate">
-    <p>A simple node that notarizes a valid certificate</p>
 </script>
