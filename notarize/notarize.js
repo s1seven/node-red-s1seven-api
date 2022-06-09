@@ -56,5 +56,5 @@ module.exports = function (RED) {
             }
         });
     }
-    RED.nodes.registerType('notarize a certificate', notarize);
+    RED.nodes.registerType('notarize certificate', notarize);
 };
