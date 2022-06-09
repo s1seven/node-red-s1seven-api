@@ -1,0 +1,11 @@
+{
+    "verify": {
+        "label": {
+            "apiConfig": " api config",
+            "name": " Name"
+        },
+        "errors": {
+            "validCertificate": "Please add a valid JSON certificate to msg.payload or global.certificate"
+        }
+    }
+}

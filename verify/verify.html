@@ -1,6 +1,6 @@
 <script type="text/javascript">
     RED.nodes.registerType('verify certificate', {
-        category: 'function',
+        category: 'network',
         color: '#a6bbcf',
         defaults: {
             name: { value: '' },
@@ -8,7 +8,7 @@
         },
         inputs: 1,
         outputs: 1,
-        icon: "s_icon_logo.svg",
+        icon: 's_icon_logo.svg',
         label: function () {
             return this.name || 'verify certificate';
         },
@@ -17,19 +17,13 @@
 
 <script type="text/html" data-template-name="verify certificate">
     <div class="form-row">
-        <label for="node-input-testProp"><i class="fa fa-tag"></i> Name</label>
-        <input type="text" id="node-input-testProp" placeholder="testProp" />
+        <label for="node-input-name"><i class="fa fa-tag"></i><span data-i18n="verify.label.name"></span></label>
+        <input type="text" id="node-input-testProp" placeholder="Name" />
     </div>
     <div class="form-row">
-        <label for="node-input-testProp"><i class="fa fa-tag"></i> testProp</label>
-        <input type="text" id="node-input-testProp" placeholder="testProp" />
-    </div>
-    <div class="form-row">
-        <label for="node-input-apiConfig"><i class="fa fa-tag"></i> api config</label>
+        <label for="node-input-apiConfig"
+            ><i class="fa fa-tag"></i><span data-i18n="verify.label.apiConfig"></span
+        ></label>
         <input type="text" id="node-input-apiConfig" placeholder="api-config" />
     </div>
-</script>
-
-<script type="text/html" data-help-name="verify certificate">
-    <p>A simple node that verifies certificates using the S1Seven API</p>
 </script>
