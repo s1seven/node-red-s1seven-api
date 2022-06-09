@@ -1,0 +1,29 @@
+<script type="text/javascript">
+    RED.nodes.registerType('get identities', {
+        category: 'network',
+        color: '#a6bbcf',
+        defaults: {
+            name: { value: '' },
+            apiConfig: { value: '', type: 'api-config' },
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: 's_icon_logo.svg',
+        label: function () {
+            return this.name || 'get identities';
+        },
+    });
+</script>
+
+<script type="text/html" data-template-name="get identities">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i><span data-i18n="identity.label.name"></span></label>
+        <input type="text" id="node-input-name" placeholder="Name" />
+    </div>
+    <div class="form-row">
+        <label for="node-input-apiConfig"
+            ><i class="fa fa-tag"></i><span data-i18n="identity.label.apiConfig"></span
+        ></label>
+        <input type="text" id="node-input-apiConfig" placeholder="api-config" />
+    </div>
+</script>
