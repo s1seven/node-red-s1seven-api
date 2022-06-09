@@ -27,10 +27,10 @@
         <p><code>msg.payload</code> is used as the payload of the POST request. It should contain the certificate to be hashed.
         If it contains an buffer or JSON string it will be converted to an object before being sent. </p>
         <p> The certificate can also be read from the global property "certificate". 
-        If msg.payload is present, it will have priority over global.certificate. </p>
+            If <code>msg.payload</code> is present, it will have priority over <code>global.certificate</code>. </p>
         <p>The following properties can be added via the admin ui, found by double-clicking on the hash node, or by passing them in using the <code>msg</code> object. If they are passed in via the <code>msg</code> object,
-        they will have priority over the values found in the admin ui. This allows the values to be overridden dynamically if necessary.
-        For example, if both <code>msg.accessToken</code> and an access token added via the admin ui are present, <code>msg.accessToken</code> will be used instead of the admin ui access token.
+            they will have priority over the values found in the admin ui. This allows the values to be overridden dynamically if necessary.
+            For example, if both <code>msg.accessToken</code> and an access token added via the admin ui are present, <code>msg.accessToken</code> will be used instead of the admin ui access token.
         </p>
         <p><code>msg.accessToken</code> is used to authenticate the HTTP request. The access token can be generated at <a>https://app.s1seven.dev/developers/access-tokens</a> or 
             <a>https://app.s1seven.ovh/developers/access-tokens</a>.</p>
