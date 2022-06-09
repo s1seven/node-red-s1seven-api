@@ -1,12 +1,11 @@
 {
     "config": {
-      "label": {
-        "app": " App",
-        "name": " Name",
-        "mode": " Mode",
-        "accessToken": " Access Token",
-        "companyId": " Company Id"
-      }
+        "label": {
+            "app": " App",
+            "name": " Name",
+            "mode": " Mode",
+            "accessToken": " Access Token",
+            "companyId": " Company Id"
+        }
     }
-  }
-  
+}

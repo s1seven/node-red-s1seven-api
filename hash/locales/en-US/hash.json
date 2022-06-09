@@ -1,13 +1,12 @@
 {
     "hash": {
-      "label": {
-        "apiConfig": " api config",
-        "name": " Name"
-      },
-      "errors": {
-        "accessToken": "Please add an access token",
-        "validCertificate": "Please add a valid JSON certificate to msg.payload or global.certificate"
-      }
+        "label": {
+            "apiConfig": " api config",
+            "name": " Name"
+        },
+        "errors": {
+            "accessToken": "Please add an access token",
+            "validCertificate": "Please add a valid JSON certificate to msg.payload or global.certificate"
+        }
     }
-  }
-  
+}
