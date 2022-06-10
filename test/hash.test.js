@@ -1,4 +1,3 @@
-require('dotenv').config();
 const helper = require('node-red-node-test-helper');
 const hash = require('../hash/hash.js');
 const certificate = require('../cert.json');

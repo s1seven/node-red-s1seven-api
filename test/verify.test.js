@@ -1,4 +1,3 @@
-require('dotenv').config();
 const helper = require('node-red-node-test-helper');
 const verifyNode = require('../verify/verify.js');
 const certificate = require('../cert.json');

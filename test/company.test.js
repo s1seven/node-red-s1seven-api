@@ -1,4 +1,3 @@
-require('dotenv').config();
 const helper = require('node-red-node-test-helper');
 const companyNode = require('../company/company.js');
 const axios = require('axios');
