@@ -26,7 +26,8 @@
             Standard output
             <dl class="message-properties">
                 <dt>payload <span class="property-type">object</span></dt>
-                <dd>the response from the HTTP request.</dd>
+                <dd>the response from the HTTP request. If the request is successful, the response will contain a <code>isNewInstance</code>
+                property and a <code>hash</code> property.</dd>
             </dl>
         </li>
     </ol>
@@ -42,7 +43,8 @@
         it will have priority over <code>global.certificate</code>.
     </p>
 
-    <p><code>msg.identity</code> is the id of the identity to be associated with the notarization.</p>
+    <p><code>msg.identity</code> is the id of the identity to be associated with the notarization.
+    You can get the identity id using the <code>get identity</code> node, and copy-pasting the id of an identity from the response.</p>
 
     <p>
         The following properties can be added via the admin ui, found by double-clicking on the hash node, or by passing
