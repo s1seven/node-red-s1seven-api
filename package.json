@@ -1,15 +1,16 @@
 {
-    "name": "red-s1seven-api",
+    "name": "@s1seven/node-red-s1seven-api",
     "version": "1.0.0",
     "description": "Nodes that interact with S1Seven's API",
     "scripts": {
         "test": "mocha \"test/**/*_spec.js\"",
         "prettier": "npx prettier --write ."
     },
-    "keywords": [],
+    "keywords": ["node-red", "s1seven"],
     "author": "eamon0989@gmail.com",
-    "license": "ISC",
+    "license": "Apache 2.0",
     "node-red": {
+        "version": ">=2.0.0",
         "nodes": {
             "hash": "hash/hash.js",
             "verify": "verify/verify.js",
