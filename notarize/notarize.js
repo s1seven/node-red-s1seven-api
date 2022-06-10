@@ -31,7 +31,7 @@ module.exports = function (RED) {
                 try {
                     certificate = validateCertificate(certificate);
                     const response = await axios.post(
-                        `${BASE_URL}${app ? app : 'dev'}/api/certificates/notarize/notarize?identity=${identity}&mode=${
+                        `${BASE_URL}${app ? app : 'dev'}/api/certificates/notarize?identity=${identity}&mode=${
                             mode ? mode : 'test'
                         }`,
                         certificate,
