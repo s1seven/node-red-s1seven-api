@@ -1,36 +1,51 @@
 <script type="text/html" data-help-name="verify certificate">
     <p>Verifies a certificate using S1Seven's servers.</p>
-    
+
     <h3>Inputs</h3>
-        <dl class="message-properties">
-            <dt>payload
-                <span class="property-type">string | buffer | object</span>
-            </dt>
-            <dd> the certificate to verify. </dd>
-            <dt class="optional">app <span class="property-type">ovh | dev</span></dt>
-            <dd> choose the app that you want to use - app.s1seven.ovh or app.s1seven.dev. Defaults to .dev</dd>
-        </dl>
-    
-     <h3>Outputs</h3>
-         <ol class="node-ports">
-             <li>Standard output
-                 <dl class="message-properties">
-                     <dt>payload <span class="property-type">object</span></dt>
-                     <dd>the response from the HTTP request. If the request is successful, the response will contain a property called <code>isValid</code>
-                     which will contain either <code>true</code> if the certificate is valid or <code>false</code> if not.</dd>
-                 </dl>
-             </li>
-         </ol>
-    
+    <dl class="message-properties">
+        <dt>
+            payload
+            <span class="property-type">string | buffer | object</span>
+        </dt>
+        <dd>the certificate to verify.</dd>
+        <dt class="optional">app <span class="property-type">ovh | dev</span></dt>
+        <dd>choose the app that you want to use - app.s1seven.ovh or app.s1seven.dev. Defaults to .dev</dd>
+    </dl>
+
+    <h3>Outputs</h3>
+    <ol class="node-ports">
+        <li>
+            Standard output
+            <dl class="message-properties">
+                <dt>payload <span class="property-type">object</span></dt>
+                <dd>
+                    the response from the HTTP request. If the request is successful, the response will contain a
+                    property called <code>isValid</code> which will contain either <code>true</code> if the certificate
+                    is valid or <code>false</code> if not.
+                </dd>
+            </dl>
+        </li>
+    </ol>
+
     <h3>Details</h3>
-        <p><code>msg.payload</code> is used as the payload of the POST request. It should contain the certificate to be hashed.
-        If it contains an buffer or JSON string it will be converted to an object before being sent. </p>
-        <p> The certificate can also be read from the global property "certificate". 
-        If <code>msg.payload</code> is present, it will have priority over <code>global.certificate</code>. </p>
-        <p>The following properties can be added via the admin ui, found by double-clicking on the hash node, or by passing them in using the <code>msg</code> object. If they are passed in via the <code>msg</code> object,
-        they will have priority over the values found in the admin ui. This allows the values to be overridden dynamically if necessary.
-        For example, if both <code>msg.accessToken</code> and an access token added via the admin ui are present, <code>msg.accessToken</code> will be used instead of the admin ui access token.
-        </p>
-        <p><code>msg.app</code> allows you to pass in the string value <code>ovh</code> or <code>dev</code> to choose which server you wish to use.</p>
-        <p> It can also be passed in using the api-config node, found by double-clicking on the hash node.</p>
-    </script>
+    <p>
+        <code>msg.payload</code> is used as the payload of the POST request. It should contain the certificate to be
+        hashed. If it contains an buffer or JSON string it will be converted to an object before being sent.
+    </p>
+    <p>
+        The certificate can also be read from the global property "certificate". If <code>msg.payload</code> is present,
+        it will have priority over <code>global.certificate</code>.
+    </p>
+    <p>
+        The following properties can be added via the admin ui, found by double-clicking on the hash node, or by passing
+        them in using the <code>msg</code> object. If they are passed in via the <code>msg</code> object, they will have
+        priority over the values found in the admin ui. This allows the values to be overridden dynamically if
+        necessary. For example, if both <code>msg.accessToken</code> and an access token added via the admin ui are
+        present, <code>msg.accessToken</code> will be used instead of the admin ui access token.
+    </p>
+    <p>
+        <code>msg.app</code> allows you to pass in the string value <code>ovh</code> or <code>dev</code> to choose which
+        server you wish to use.
+    </p>
+    <p>It can also be passed in using the api-config node, found by double-clicking on the hash node.</p>
+</script>

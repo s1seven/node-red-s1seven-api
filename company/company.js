@@ -21,14 +21,12 @@ module.exports = function (RED) {
                 done();
             } else {
                 try {
-                    const response = await axios.get(
-                        `${BASE_URL}${app ? app : 'dev'}/api/company/${companyId}`,
-                        {
-                            headers: {
-                                Authorization: `Bearer ${accessToken}`,
-                                'Content-Type': 'application/json'                            },
-                        }
-                    );
+                    const response = await axios.get(`${BASE_URL}${app ? app : 'dev'}/api/company/${companyId}`, {
+                        headers: {
+                            Authorization: `Bearer ${accessToken}`,
+                            'Content-Type': 'application/json',
+                        },
+                    });
                     msg.payload = response.data;
                     send(msg);
                     done();

@@ -23,9 +23,7 @@ module.exports = function (RED) {
             } else {
                 try {
                     const response = await axios.get(
-                        `${BASE_URL}${app ? app : 'dev'}/api/identities?mode=${
-                            mode ? mode : 'test'
-                        }`,
+                        `${BASE_URL}${app ? app : 'dev'}/api/identities?mode=${mode ? mode : 'test'}`,
                         {
                             headers: {
                                 Authorization: `Bearer ${accessToken}`,

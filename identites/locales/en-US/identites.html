@@ -1,43 +1,56 @@
 <script type="text/html" data-help-name="get identities">
     <p>Returns a list of all identities for the company specified in header.</p>
-    
+
     <h3>Inputs</h3>
-        <dl class="message-properties">
-            <dt class="message-properties">accessToken <span class="property-type">string</span></dt>
-            <dd> the access token to use to authenticate the request.</dd>
-            <dt class="message-properties">companyId <span class="property-type">string</span></dt>
-            <dd> the id of the company to associate with the notarization.</dd>
-            <dt class="message-properties">mode <span class="property-type">test | live</span></dt>
-            <dd> choose the mode that you want to use - test mode or live mode. Defaults to test</dd>
-            <dt class="optional">app <span class="property-type">ovh | dev</span></dt>
-            <dd> choose the app that you want to use - app.s1seven.ovh or app.s1seven.dev. Defaults to .dev</dd>
-        </dl>
-    
-     <h3>Outputs</h3>
-         <ol class="node-ports">
-             <li>Standard output
-                 <dl class="message-properties">
-                     <dt>payload <span class="property-type">object</span></dt>
-                     <dd>the response from the HTTP request containing an array of identity objects.</dd>
-                 </dl>
-             </li>
-         </ol>
-    
-    <h3>Details</h3>        
-        <p>The following properties can be added via the admin ui, found by double-clicking on the hash node, or by passing them in using the <code>msg</code> object. If they are passed in via the <code>msg</code> object,
-            they will have priority over the values found in the admin ui. This allows the values to be overridden dynamically if necessary.
-            For example, if both <code>msg.accessToken</code> and an access token added via the admin ui are present, <code>msg.accessToken</code> will be used instead of the admin ui access token.
-        </p>
+    <dl class="message-properties">
+        <dt class="message-properties">accessToken <span class="property-type">string</span></dt>
+        <dd>the access token to use to authenticate the request.</dd>
+        <dt class="message-properties">companyId <span class="property-type">string</span></dt>
+        <dd>the id of the company to associate with the notarization.</dd>
+        <dt class="message-properties">mode <span class="property-type">test | live</span></dt>
+        <dd>choose the mode that you want to use - test mode or live mode. Defaults to test</dd>
+        <dt class="optional">app <span class="property-type">ovh | dev</span></dt>
+        <dd>choose the app that you want to use - app.s1seven.ovh or app.s1seven.dev. Defaults to .dev</dd>
+    </dl>
 
-        <p><code>msg.accessToken</code> is used to authenticate the HTTP request. The access token can be generated at <a>https://app.s1seven.dev/developers/access-tokens</a> or 
-            <a>https://app.s1seven.ovh/developers/access-tokens</a>.
-        </p>
-       
-        <p><code>msg.companyId</code> is the id of the company to be associated with the notarization. It can be found at <a>https://app.s1seven.ovh/developers/constants</a> or 
-            <a>https://app.s1seven.dev/developers/constants</a>.
-        </p>
+    <h3>Outputs</h3>
+    <ol class="node-ports">
+        <li>
+            Standard output
+            <dl class="message-properties">
+                <dt>payload <span class="property-type">object</span></dt>
+                <dd>the response from the HTTP request containing an array of identity objects.</dd>
+            </dl>
+        </li>
+    </ol>
 
-        <p><code>msg.mode</code> allows you to pass in the string value <code>test</code> or <code>live</code> to choose which choose mode you want to use - test mode or live mode.</p>
+    <h3>Details</h3>
+    <p>
+        The following properties can be added via the admin ui, found by double-clicking on the hash node, or by passing
+        them in using the <code>msg</code> object. If they are passed in via the <code>msg</code> object, they will have
+        priority over the values found in the admin ui. This allows the values to be overridden dynamically if
+        necessary. For example, if both <code>msg.accessToken</code> and an access token added via the admin ui are
+        present, <code>msg.accessToken</code> will be used instead of the admin ui access token.
+    </p>
 
-        <p><code>msg.app</code> allows you to pass in the string value <code>ovh</code> or <code>dev</code> to choose which server you wish to use.</p>
-    </script>
+    <p>
+        <code>msg.accessToken</code> is used to authenticate the HTTP request. The access token can be generated at
+        <a>https://app.s1seven.dev/developers/access-tokens</a> or
+        <a>https://app.s1seven.ovh/developers/access-tokens</a>.
+    </p>
+
+    <p>
+        <code>msg.companyId</code> is the id of the company to be associated with the notarization. It can be found at
+        <a>https://app.s1seven.ovh/developers/constants</a> or <a>https://app.s1seven.dev/developers/constants</a>.
+    </p>
+
+    <p>
+        <code>msg.mode</code> allows you to pass in the string value <code>test</code> or <code>live</code> to choose
+        which choose mode you want to use - test mode or live mode.
+    </p>
+
+    <p>
+        <code>msg.app</code> allows you to pass in the string value <code>ovh</code> or <code>dev</code> to choose which
+        server you wish to use.
+    </p>
+</script>
