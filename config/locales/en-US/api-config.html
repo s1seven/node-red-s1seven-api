@@ -1,5 +1,38 @@
 <script type="text/html" data-help-name="api-config">
     <h1>S1Seven API configuration node</h1>
-    <p>A simple node that allows you to configure the necessary variables to interact with the S1Seven UI.</p>
-    <p>By setting the variables once here, they are automatically made available in all the S1Seven API nodes.</p>
+    <p>A simple node that allows you to configure the variables necessary to interact with the S1Seven UI.</p>
+    <p>By setting the variables once here, they are automatically made available to all the S1Seven API nodes.</p>
+
+    <h2>Details</h2>
+    <p>
+        <code>accessToken</code> is used to authenticate the HTTP request. The access token can be generated at
+        <a>https://app.s1seven.dev/developers/access-tokens</a> or
+        <a>https://app.s1seven.ovh/developers/access-tokens</a>.
+    </p>
+
+    <p>
+        <code>companyId</code> is the id of the company to be associated with the notarization. It can be found at
+        <a>https://app.s1seven.ovh/developers/constants</a> or <a>https://app.s1seven.dev/developers/constants</a>.
+    </p>
+
+    <p>
+        <code>mode</code> allows you to select <code>test</code> or <code>live</code> to choose which choose mode you
+        want to use - test mode or live mode.
+    </p>
+
+    <p>
+        <code>app</code> allows you to select <code>ovh</code> or <code>dev</code> to choose which server you wish to
+        use.
+    </p>
+
+    <p>Name allows you to customise the name of your configuration, allowing you to have multiple configurations.</p>
+
+    <h3>Overridding</h3>
+    <p>
+        The admin ui can be found by double-clicking on any S1Seven API node, selecting the option "Add new api-config"
+        and clicking on the edit button. Any variables passed in via the <code>msg</code> object will have priority over
+        the values found in the admin ui. This allows the values to be overridden dynamically if necessary. For example,
+        if both <code>msg.accessToken</code> and an access token added via the admin ui are present,
+        <code>msg.accessToken</code> will be used instead of the admin ui access token.
+    </p>
 </script>
