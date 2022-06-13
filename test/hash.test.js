@@ -63,6 +63,41 @@ describe('hashing Node', function () {
         });
     });
 
+    it('algorithm and encoding can be overridden', function (done) {
+        const flow = [{ id: 'n1', type: 'hash', name: 'hash', wires: [] }];
+        axios.post.mockResolvedValue({ data: { value: 'hashValue' } });
+        const algorithm = 'sha512';
+        const encoding = 'base64';
+
+        helper.load(hash, flow, function () {
+            const n1 = helper.getNode('n1');
+
+            n1.receive({
+                payload: certificate,
+                accessToken: fakeAccessToken,
+                algorithm,
+                encoding,
+            });
+
+            expect(axios.post).toHaveBeenCalledWith(
+                `${BASE_URL}dev/api/certificates/hash`,
+                {
+                    algorithm: algorithm,
+                    encoding: encoding,
+                    source: certificate,
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${fakeAccessToken}`,
+                        'Content-Type': 'application/json',
+                    },
+                }
+            );
+
+            done();
+        });
+    });
+
     it('when no accessToken is present, a warning will be shown', function (done) {
         const flow = [
             { id: 'n1', type: 'hash', name: 'hash', wires: [['n2']] },
