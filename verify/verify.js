@@ -14,19 +14,16 @@ module.exports = function (RED) {
             let certificate = msg.payload || globalContext.get('certificate');
             const mode = msg.mode || apiConfig?.test;
             const app = msg.app || apiConfig?.app;
+            const url = `${BASE_URL}${app ? app : 'dev'}/api/certificates/verify/?mode=${mode ? mode : 'test'}`;
 
             if (certificate) {
                 try {
                     certificate = validateCertificate(certificate);
-                    const response = await axios.post(
-                        `${BASE_URL}${app ? app : 'dev'}/api/certificates/verify/?mode=${mode ? mode : 'test'}`,
-                        certificate,
-                        {
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                        }
-                    );
+                    const response = await axios.post(url, certificate, {
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    });
                     msg.payload = response.data;
                     send(msg);
                     done();

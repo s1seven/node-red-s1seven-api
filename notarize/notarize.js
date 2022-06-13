@@ -17,6 +17,9 @@ module.exports = function (RED) {
             const identity = msg.identity || globalContext.get('identity');
             const app = msg.app || apiConfig?.app;
             let certificate = msg.payload || globalContext.get('certificate');
+            const url = `${BASE_URL}${app ? app : 'dev'}/api/certificates/notarize?identity=${identity}&mode=${
+                mode ? mode : 'test'
+            }`;
 
             if (!accessToken) {
                 node.warn(RED._('notarize.errors.accessToken'));
@@ -30,19 +33,13 @@ module.exports = function (RED) {
             } else if (certificate) {
                 try {
                     certificate = validateCertificate(certificate);
-                    const response = await axios.post(
-                        `${BASE_URL}${app ? app : 'dev'}/api/certificates/notarize?identity=${identity}&mode=${
-                            mode ? mode : 'test'
-                        }`,
-                        certificate,
-                        {
-                            headers: {
-                                Authorization: `Bearer ${accessToken}`,
-                                'Content-Type': 'application/json',
-                                company: companyId,
-                            },
-                        }
-                    );
+                    const response = await axios.post(url, certificate, {
+                        headers: {
+                            Authorization: `Bearer ${accessToken}`,
+                            'Content-Type': 'application/json',
+                            company: companyId,
+                        },
+                    });
                     msg.payload = response.data;
                     send(msg);
                     done();

@@ -14,6 +14,7 @@ module.exports = function (RED) {
             let certificate = msg.payload || globalContext.get('certificate');
             const accessToken = msg.accessToken || apiConfig?.accessToken;
             const app = msg.app || apiConfig?.app;
+            const url = `${BASE_URL}${app ? app : 'dev'}/api/certificates/hash`;
 
             if (!accessToken) {
                 node.warn(RED._('hash.errors.accessToken'));
@@ -22,7 +23,7 @@ module.exports = function (RED) {
                 try {
                     certificate = validateCertificate(certificate);
                     const response = await axios.post(
-                        `${BASE_URL}${app ? app : 'dev'}/api/certificates/hash`,
+                        url,
                         {
                             algorithm: 'sha256', // allow these to be configured
                             encoding: 'hex',

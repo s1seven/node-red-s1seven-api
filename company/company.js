@@ -12,6 +12,7 @@ module.exports = function (RED) {
             const accessToken = msg.accessToken || apiConfig?.accessToken;
             const app = msg.app || apiConfig?.app;
             const companyId = msg.companyId || apiConfig?.companyId;
+            const url = `${BASE_URL}${app ? app : 'dev'}/api/company/${companyId}`;
 
             if (!accessToken) {
                 node.warn(RED._('company.errors.accessToken'));
@@ -21,7 +22,7 @@ module.exports = function (RED) {
                 done();
             } else {
                 try {
-                    const response = await axios.get(`${BASE_URL}${app ? app : 'dev'}/api/company/${companyId}`, {
+                    const response = await axios.get(url, {
                         headers: {
                             Authorization: `Bearer ${accessToken}`,
                             'Content-Type': 'application/json',

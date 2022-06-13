@@ -13,6 +13,7 @@ module.exports = function (RED) {
             const companyId = msg.companyId || apiConfig?.companyId;
             const mode = msg.mode || apiConfig?.test;
             const app = msg.app || apiConfig?.app;
+            const url = `${BASE_URL}${app ? app : 'dev'}/api/identities?mode=${mode ? mode : 'test'}`;
 
             if (!accessToken) {
                 node.warn(RED._('identity.errors.accessToken'));
@@ -22,16 +23,13 @@ module.exports = function (RED) {
                 done();
             } else {
                 try {
-                    const response = await axios.get(
-                        `${BASE_URL}${app ? app : 'dev'}/api/identities?mode=${mode ? mode : 'test'}`,
-                        {
-                            headers: {
-                                Authorization: `Bearer ${accessToken}`,
-                                'Content-Type': 'application/json',
-                                company: companyId,
-                            },
-                        }
-                    );
+                    const response = await axios.get(url, {
+                        headers: {
+                            Authorization: `Bearer ${accessToken}`,
+                            'Content-Type': 'application/json',
+                            company: companyId,
+                        },
+                    });
                     msg.payload = response.data;
                     send(msg);
                     done();
