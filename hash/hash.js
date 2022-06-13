@@ -1,5 +1,9 @@
 module.exports = function (RED) {
     'use strict';
+    const path = require('path');
+    require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
+    const devUrl = process.env.DEV_URL;
+    // if devUrl, replace BASE URL
     const axios = require('axios');
     const { BASE_URL } = require('../constants');
     const validateCertificate = require('../utils/validateCertificate');
@@ -15,6 +19,8 @@ module.exports = function (RED) {
             const accessToken = msg.accessToken || apiConfig?.accessToken;
             const app = msg.app || apiConfig?.app;
             const url = `${BASE_URL}${app ? app : 'dev'}/api/certificates/hash`;
+            const algorithm = msg.algorithm || 'sha256';
+            const encoding = msg.encoding || 'hex';
 
             if (!accessToken) {
                 node.warn(RED._('hash.errors.accessToken'));
@@ -25,8 +31,8 @@ module.exports = function (RED) {
                     const response = await axios.post(
                         url,
                         {
-                            algorithm: 'sha256', // allow these to be configured
-                            encoding: 'hex',
+                            algorithm: algorithm,
+                            encoding: encoding,
                             source: certificate,
                         },
                         {
