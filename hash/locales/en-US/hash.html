@@ -12,6 +12,12 @@
         <dd>the access token to use to authenticate the request.</dd>
         <dt class="optional">app <span class="property-type">ovh | dev</span></dt>
         <dd>choose the app that you want to use - app.s1seven.ovh or app.s1seven.dev. Defaults to .dev</dd>
+        <dt class="optional">
+            algorithm <span class="property-type">sha256 | sha512 | sha3-256 | sha3-384 | sha3-512</span>
+        </dt>
+        <dd>choose the hashing algorithm. Defaults to <code>sha256</code></dd>
+        <dt class="optional">encoding <span class="property-type">base64 | hex</span></dt>
+        <dd>choose the encoding. Defaults to <code>hex</code></dd>
     </dl>
 
     <h3>Outputs</h3>
@@ -33,6 +39,14 @@
     <p>
         The certificate can also be read from the global property "certificate". If <code>msg.payload</code> is present,
         it will have priority over <code>global.certificate</code>.
+    </p>
+    <p>
+        <code>msg.algorithm</code> is optional and is used to specify the hashing algorithm. If not specified, it
+        defaults to <code>sha256</code>.
+    </p>
+    <p>
+        <code>msg.encoding</code> is optional and is used to specify the encoding type. If not specified, it defaults to
+        <code>hex</code>.
     </p>
     <p>
         The following properties can be added via the admin ui, found by double-clicking on the hash node, or by passing
