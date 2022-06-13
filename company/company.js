@@ -1,5 +1,8 @@
 module.exports = function (RED) {
     'use strict';
+    const path = require('path');
+    require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
+    const DEV_URL = process.env.DEV_URL;
     const axios = require('axios');
     const { BASE_URL } = require('../constants');
 
@@ -11,8 +14,9 @@ module.exports = function (RED) {
         node.on('input', async (msg, send, done) => {
             const accessToken = msg.accessToken || apiConfig?.accessToken;
             const app = msg.app || apiConfig?.app;
+            const FULL_BASE_URL = `${BASE_URL}${app ? app : 'dev'}`;
             const companyId = msg.companyId || apiConfig?.companyId;
-            const url = `${BASE_URL}${app ? app : 'dev'}/api/company/${companyId}`;
+            const url = `${DEV_URL ? DEV_URL : FULL_BASE_URL}/api/company/${companyId}`;
 
             if (!accessToken) {
                 node.warn(RED._('company.errors.accessToken'));

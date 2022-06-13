@@ -2,8 +2,7 @@ module.exports = function (RED) {
     'use strict';
     const path = require('path');
     require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
-    const devUrl = process.env.DEV_URL;
-    // if devUrl, replace BASE URL
+    const DEV_URL = process.env.DEV_URL;
     const axios = require('axios');
     const { BASE_URL } = require('../constants');
     const validateCertificate = require('../utils/validateCertificate');
@@ -18,7 +17,8 @@ module.exports = function (RED) {
             let certificate = msg.payload || globalContext.get('certificate');
             const accessToken = msg.accessToken || apiConfig?.accessToken;
             const app = msg.app || apiConfig?.app;
-            const url = `${BASE_URL}${app ? app : 'dev'}/api/certificates/hash`;
+            const FULL_BASE_URL = `${BASE_URL}${app ? app : 'dev'}`;
+            const url = `${DEV_URL ? DEV_URL : FULL_BASE_URL}/api/certificates/hash`;
             const algorithm = msg.algorithm || 'sha256';
             const encoding = msg.encoding || 'hex';
 
