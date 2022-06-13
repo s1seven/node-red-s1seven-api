@@ -1,10 +1,27 @@
 <script type="text/javascript">
+    const URL_TO_ENV_MAP = {
+        development: 'https://app.s1seven.ovh',
+        staging: 'https://app.s1seven.dev',
+        // production: 'https://app.s1seven.com',
+    };
+    const MODE = ['test', 'live'];
+
     RED.nodes.registerType('api-config', {
         category: 'config',
         defaults: {
-            mode: { value: '', required: false },
-            app: { value: '', required: true },
+            mode: {
+                value: '',
+                required: false,
+                validator: (mode) => MODE.includes(mode),
+            },
+            environment: {
+                value: '',
+                required: true,
+                validator: (environment) => Object.keys(URL_TO_ENV_MAP.includes(environment)),
+            },
             accessToken: { value: '', required: false },
+
+            identity: { value: '', required: false },
             companyId: { value: '', required: false },
             name: { value: '', required: false },
         },
@@ -24,15 +41,19 @@
         </select>
     </div>
     <div class="form-row">
-        <label for="node-config-input-app"><i class="fa fa-bookmark"></i><span data-i18n="config.label.app"></span></label>
-        <select id="node-config-input-app">
-            <option selected value="dev">.dev</option>
-            <option value="ovh">.ovh</option>
+        <label for="node-config-input-environment"><i class="fa fa-bookmark"></i><span data-i18n="config.label.environment"></span></label>
+        <select id="node-config-input-environment">
+            <option selected value="staging">staging</option>
+            <option value="development">development</option>
         </select>
     </div>
     <div class="form-row">
         <label for="node-config-input-accessToken"><i class="fa fa-bookmark"></i><span data-i18n="config.label.accessToken"></label>
         <input type="text" id="node-config-input-accessToken" />
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-identity"><i class="fa fa-bookmark"></i><span data-i18n="config.label.identity"></label>
+        <input type="text" id="node-config-input-identity" />
     </div>
     <div class="form-row">
         <label for="node-config-input-companyId"><i class="fa fa-bookmark"></i><span data-i18n="config.label.companyId"></label>
@@ -43,3 +64,12 @@
         <input type="text" id="node-config-input-name" />
     </div>
 </script>
+
+<!-- <script>
+    const { ALGORITHM_OPTIONS } = require('../constants.js');
+    const selectBox = document.getElementById('node-config-input-algorithm');
+    ALGORITHM_OPTIONS.forEach(algorithm => {
+        const option = document.createElement('option');
+        option.
+    })
+</script> -->

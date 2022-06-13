@@ -1,7 +1,7 @@
 {
     "config": {
         "label": {
-            "app": " App",
+            "environment": " Environment",
             "name": " Name",
             "mode": " Mode",
             "accessToken": " Access Token",
