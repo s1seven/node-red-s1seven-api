@@ -4,7 +4,7 @@ module.exports = function (RED) {
     require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
     const DEV_URL = process.env.DEV_URL;
     const axios = require('axios');
-    const { BASE_URL } = require('../constants');
+    const { BASE_URL, ALGORITHM_OPTIONS, ENCODING_OPTIONS } = require('../constants');
     const validateCertificate = require('../utils/validateCertificate');
 
     function hashCertificate(config) {
@@ -24,6 +24,12 @@ module.exports = function (RED) {
 
             if (!accessToken) {
                 node.warn(RED._('hash.errors.accessToken'));
+                done();
+            } else if (!ALGORITHM_OPTIONS.includes(algorithm)) {
+                node.warn(RED._('hash.errors.algorithm'));
+                done();
+            } else if (!ENCODING_OPTIONS.includes(encoding)) {
+                node.warn(RED._('hash.errors.encoding'));
                 done();
             } else if (certificate) {
                 try {
