@@ -3,7 +3,7 @@ const helper = require('node-red-node-test-helper');
 const notarizeNode = require('../notarize/notarize.js');
 const certificate = require('../cert.json');
 const axios = require('axios');
-const { BASE_URL } = require('../constants');
+const { URL_TO_ENV_MAP } = require('../constants');
 const fakeAccessToken = 'test';
 const fakeIdentity = 'test';
 const fakeCompanyId = 'test';
@@ -50,7 +50,7 @@ describe('notarize Node', function () {
             });
 
             expect(axios.post).toHaveBeenCalledWith(
-                `${BASE_URL}dev/api/certificates/notarize?identity=${fakeIdentity}&mode=test`,
+                `${URL_TO_ENV_MAP['staging']}/api/certificates/notarize?identity=${fakeIdentity}&mode=test`,
                 certificate,
                 {
                     headers: {

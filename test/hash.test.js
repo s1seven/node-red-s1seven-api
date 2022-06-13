@@ -2,7 +2,7 @@ const helper = require('node-red-node-test-helper');
 const hash = require('../hash/hash.js');
 const certificate = require('../cert.json');
 const axios = require('axios');
-const { BASE_URL } = require('../constants');
+const { URL_TO_ENV_MAP } = require('../constants');
 const fakeAccessToken = 'test';
 
 jest.mock('axios');
@@ -45,7 +45,7 @@ describe('hashing Node', function () {
             });
 
             expect(axios.post).toHaveBeenCalledWith(
-                `${BASE_URL}dev/api/certificates/hash`,
+                `${URL_TO_ENV_MAP['staging']}/api/certificates/hash`,
                 {
                     algorithm: 'sha256',
                     encoding: 'hex',
@@ -80,7 +80,7 @@ describe('hashing Node', function () {
             });
 
             expect(axios.post).toHaveBeenCalledWith(
-                `${BASE_URL}dev/api/certificates/hash`,
+                `${URL_TO_ENV_MAP['staging']}/api/certificates/hash`,
                 {
                     algorithm: algorithm,
                     encoding: encoding,

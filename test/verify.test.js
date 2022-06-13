@@ -2,7 +2,7 @@ const helper = require('node-red-node-test-helper');
 const verifyNode = require('../verify/verify.js');
 const certificate = require('../cert.json');
 const axios = require('axios');
-const { BASE_URL } = require('../constants');
+const { URL_TO_ENV_MAP } = require('../constants');
 const fakeAccessToken = 'test';
 
 jest.mock('axios');
@@ -56,11 +56,15 @@ describe('verify Node', function () {
                 payload: certificate,
                 accessToken: fakeAccessToken,
             });
-            expect(axios.post).toHaveBeenCalledWith(`${BASE_URL}dev/api/certificates/verify/?mode=test`, certificate, {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
+            expect(axios.post).toHaveBeenCalledWith(
+                `${URL_TO_ENV_MAP['staging']}/api/certificates/verify/?mode=test`,
+                certificate,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                }
+            );
             done();
         });
     });

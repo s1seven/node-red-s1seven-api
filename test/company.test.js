@@ -1,7 +1,7 @@
 const helper = require('node-red-node-test-helper');
 const companyNode = require('../company/company.js');
 const axios = require('axios');
-const { BASE_URL } = require('../constants');
+const { URL_TO_ENV_MAP } = require('../constants');
 const fakeAccessToken = 'test';
 const fakeCompanyId = 'test';
 
@@ -12,6 +12,7 @@ helper.init(require.resolve('node-red'));
 describe('get company by id Node', function () {
     beforeEach(function (done) {
         helper.startServer(done);
+        helper.settings; // take a look at what is expected
     });
 
     afterEach(function (done) {
@@ -42,7 +43,7 @@ describe('get company by id Node', function () {
                 accessToken: fakeAccessToken,
                 companyId: fakeCompanyId,
             });
-            expect(axios.get).toHaveBeenCalledWith(`${BASE_URL}dev/api/company/${fakeCompanyId}`, {
+            expect(axios.get).toHaveBeenCalledWith(`${URL_TO_ENV_MAP['staging']}/api/companies/${fakeCompanyId}`, {
                 headers: {
                     Authorization: `Bearer ${fakeAccessToken}`,
                     'Content-Type': 'application/json',

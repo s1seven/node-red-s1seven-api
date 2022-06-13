@@ -1,7 +1,7 @@
 const helper = require('node-red-node-test-helper');
-const identitiesNode = require('../identites/identites.js');
+const identitiesNode = require('../identities/identities.js');
 const axios = require('axios');
-const { BASE_URL } = require('../constants');
+const { URL_TO_ENV_MAP } = require('../constants');
 const fakeAccessToken = 'test';
 const fakeCompanyId = 'test';
 
@@ -42,7 +42,7 @@ describe('get identities Node', function () {
                 accessToken: fakeAccessToken,
                 companyId: fakeCompanyId,
             });
-            expect(axios.get).toHaveBeenCalledWith(`${BASE_URL}dev/api/identities?mode=test`, {
+            expect(axios.get).toHaveBeenCalledWith(`${URL_TO_ENV_MAP['staging']}/api/identities?mode=test`, {
                 headers: {
                     Authorization: `Bearer ${fakeAccessToken}`,
                     'Content-Type': 'application/json',
