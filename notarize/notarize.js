@@ -4,7 +4,7 @@ module.exports = function (RED) {
     require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
     const DEV_URL = process.env.DEV_URL;
     const axios = require('axios');
-    const { BASE_URL } = require('../constants');
+    const { URL_TO_ENV_MAP } = require('../constants');
     const validateCertificate = require('../utils/validateCertificate');
 
     function notarize(config) {
@@ -18,13 +18,12 @@ module.exports = function (RED) {
             const companyId = msg.companyId || apiConfig?.companyId;
             const mode = msg.mode || apiConfig?.test;
             const identity = msg.identity || globalContext.get('identity');
-            const app = msg.app || apiConfig?.app;
-            const FULL_BASE_URL = `${BASE_URL}${app ? app : 'dev'}`;
-            let certificate = msg.payload || globalContext.get('certificate');
-
-            const url = `${DEV_URL ? DEV_URL : FULL_BASE_URL}/api/certificates/notarize?identity=${identity}&mode=${
+            const environment = msg.environment || apiConfig?.environment || 'staging';
+            const BASE_URL = URL_TO_ENV_MAP[environment];
+            const url = `${DEV_URL ? DEV_URL : BASE_URL}/api/certificates/notarize?identity=${identity}&mode=${
                 mode ? mode : 'test'
             }`;
+            let certificate = msg.payload || globalContext.get('certificate');
 
             if (!accessToken) {
                 node.warn(RED._('notarize.errors.accessToken'));

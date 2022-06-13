@@ -4,7 +4,7 @@ module.exports = function (RED) {
     require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
     const DEV_URL = process.env.DEV_URL;
     const axios = require('axios');
-    const { BASE_URL } = require('../constants');
+    const { URL_TO_ENV_MAP } = require('../constants');
     const validateCertificate = require('../utils/validateCertificate');
 
     function verifyCertificateNode(config) {
@@ -16,9 +16,9 @@ module.exports = function (RED) {
             const apiConfig = RED.nodes.getNode(config.apiConfig);
             let certificate = msg.payload || globalContext.get('certificate');
             const mode = msg.mode || apiConfig?.test;
-            const app = msg.app || apiConfig?.app;
-            const FULL_BASE_URL = `${BASE_URL}${app ? app : 'dev'}`;
-            const url = `${DEV_URL ? DEV_URL : FULL_BASE_URL}/api/certificates/verify/?mode=${mode ? mode : 'test'}`;
+            const environment = msg.environment || apiConfig?.environment || 'staging';
+            const BASE_URL = URL_TO_ENV_MAP[environment];
+            const url = `${DEV_URL ? DEV_URL : BASE_URL}/api/certificates/verify/?mode=${mode ? mode : 'test'}`;
 
             if (certificate) {
                 try {

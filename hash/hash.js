@@ -4,7 +4,7 @@ module.exports = function (RED) {
     require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
     const DEV_URL = process.env.DEV_URL;
     const axios = require('axios');
-    const { BASE_URL, ALGORITHM_OPTIONS, ENCODING_OPTIONS } = require('../constants');
+    const { URL_TO_ENV_MAP, ALGORITHM_OPTIONS, ENCODING_OPTIONS } = require('../constants');
     const validateCertificate = require('../utils/validateCertificate');
 
     function hashCertificate(config) {
@@ -16,9 +16,9 @@ module.exports = function (RED) {
         node.on('input', async (msg, send, done) => {
             let certificate = msg.payload || globalContext.get('certificate');
             const accessToken = msg.accessToken || apiConfig?.accessToken;
-            const app = msg.app || apiConfig?.app;
-            const FULL_BASE_URL = `${BASE_URL}${app ? app : 'dev'}`;
-            const url = `${DEV_URL ? DEV_URL : FULL_BASE_URL}/api/certificates/hash`;
+            const environment = msg.environment || apiConfig?.environment || 'staging';
+            const BASE_URL = URL_TO_ENV_MAP[environment];
+            const url = `${DEV_URL ? DEV_URL : BASE_URL}/api/certificates/hash`;
             const algorithm = msg.algorithm || 'sha256';
             const encoding = msg.encoding || 'hex';
 
