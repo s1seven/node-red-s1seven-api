@@ -16,8 +16,8 @@
         <dd>the identity id to associate with the notarization.</dd>
         <dt class="optional">mode <span class="property-type">test | live</span></dt>
         <dd>choose the mode that you want to use - test mode or live mode. Defaults to test</dd>
-        <dt class="optional">app <span class="property-type">ovh | dev</span></dt>
-        <dd>choose the app that you want to use - app.s1seven.ovh or app.s1seven.dev. Defaults to .dev</dd>
+        <dt class="optional">environment <span class="property-type">staging | development</span></dt>
+        <dd>choose the environment that you want to use - app.s1seven.ovh or app.s1seven.dev. Defaults to staging</dd>
     </dl>
 
     <h3>Outputs</h3>
@@ -26,8 +26,10 @@
             Standard output
             <dl class="message-properties">
                 <dt>payload <span class="property-type">object</span></dt>
-                <dd>the response from the HTTP request. If the request is successful, the response will contain a <code>isNewInstance</code>
-                property and a <code>hash</code> property.</dd>
+                <dd>
+                    the response from the HTTP request. If the request is successful, the response will contain a
+                    <code>isNewInstance</code> property and a <code>hash</code> property.
+                </dd>
             </dl>
         </li>
     </ol>
@@ -43,8 +45,10 @@
         it will have priority over <code>global.certificate</code>.
     </p>
 
-    <p><code>msg.identity</code> is the id of the identity to be associated with the notarization.
-    You can get the identity id using the <code>get identity</code> node, and copy-pasting the id of an identity from the response.</p>
+    <p>
+        <code>msg.identity</code> is the id of the identity to be associated with the notarization. You can get the
+        identity id using the <code>get identity</code> node, and copy-pasting the id of an identity from the response.
+    </p>
 
     <p>
         The following properties can be added via the admin ui, found by double-clicking on the hash node, or by passing
@@ -71,7 +75,7 @@
     </p>
 
     <p>
-        <code>msg.app</code> allows you to pass in the string value <code>ovh</code> or <code>dev</code> to choose which
-        server you wish to use.
+        <code>msg.environment</code> allows you to pass in the string value <code>staging</code> or
+        <code>development</code> to choose which server you wish to use.
     </p>
 </script>

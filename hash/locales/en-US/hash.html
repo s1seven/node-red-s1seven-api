@@ -10,8 +10,8 @@
         <dd>the certificate to hash.</dd>
         <dt class="message-properties">accessToken <span class="property-type">string</span></dt>
         <dd>the access token to use to authenticate the request.</dd>
-        <dt class="optional">app <span class="property-type">ovh | dev</span></dt>
-        <dd>choose the app that you want to use - app.s1seven.ovh or app.s1seven.dev. Defaults to .dev</dd>
+        <dt class="optional">environment <span class="property-type">staging | development</span></dt>
+        <dd>choose the environment that you want to use - app.s1seven.ovh or app.s1seven.dev. Defaults to staging</dd>
         <dt class="optional">
             algorithm <span class="property-type">sha256 | sha512 | sha3-256 | sha3-384 | sha3-512</span>
         </dt>
@@ -62,8 +62,8 @@
     </p>
     <p>It can also be passed in using the api-config node, found by double-clicking on the hash node.</p>
     <p>
-        <code>msg.app</code> allows you to pass in the string value <code>ovh</code> or <code>dev</code> to choose which
-        server you wish to use.
+        <code>msg.environment</code> allows you to pass in the string value <code>staging</code> or
+        <code>development</code> to choose which server you wish to use.
     </p>
     <p>This can also be set via the config node.</p>
 </script>
