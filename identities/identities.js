@@ -4,7 +4,7 @@ module.exports = function (RED) {
     require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
     const DEV_URL = process.env.DEV_URL;
     const axios = require('axios');
-    const { BASE_URL } = require('../constants');
+    const { URL_TO_ENV_MAP } = require('../constants');
 
     function getIdentities(config) {
         RED.nodes.createNode(this, config);
@@ -15,9 +15,9 @@ module.exports = function (RED) {
             const accessToken = msg.accessToken || apiConfig?.accessToken;
             const companyId = msg.companyId || apiConfig?.companyId;
             const mode = msg.mode || apiConfig?.test;
-            const app = msg.app || apiConfig?.app;
-            const FULL_BASE_URL = `${BASE_URL}${app ? app : 'dev'}`;
-            const url = `${DEV_URL ? DEV_URL : FULL_BASE_URL}/api/identities?mode=${mode ? mode : 'test'}`;
+            const environment = msg.environment || apiConfig?.environment || 'staging';
+            const BASE_URL = URL_TO_ENV_MAP[environment];
+            const url = `${DEV_URL ? DEV_URL : BASE_URL}/api/identities?mode=${mode ? mode : 'test'}`;
 
             if (!accessToken) {
                 node.warn(RED._('identity.errors.accessToken'));

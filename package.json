@@ -18,7 +18,7 @@
             "hash": "hash/hash.js",
             "verify": "verify/verify.js",
             "notarize": "notarize/notarize.js",
-            "identites": "identites/identites.js",
+            "identities": "identities/identities.js",
             "company": "company/company.js",
             "api-config": "config/api-config.js"
         }

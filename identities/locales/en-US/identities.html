@@ -9,8 +9,8 @@
         <dd>the id of the company to associate with the notarization.</dd>
         <dt class="message-properties">mode <span class="property-type">test | live</span></dt>
         <dd>choose the mode that you want to use - test mode or live mode. Defaults to test</dd>
-        <dt class="optional">app <span class="property-type">ovh | dev</span></dt>
-        <dd>choose the app that you want to use - app.s1seven.ovh or app.s1seven.dev. Defaults to .dev</dd>
+        <dt class="optional">environment <span class="property-type">staging | development</span></dt>
+        <dd>choose the environment that you want to use - app.s1seven.ovh or app.s1seven.dev. Defaults to staging</dd>
     </dl>
 
     <h3>Outputs</h3>
@@ -50,7 +50,7 @@
     </p>
 
     <p>
-        <code>msg.app</code> allows you to pass in the string value <code>ovh</code> or <code>dev</code> to choose which
-        server you wish to use.
+        <code>msg.environment</code> allows you to pass in the string value <code>staging</code> or
+        <code>development</code> to choose which server you wish to use.
     </p>
 </script>
