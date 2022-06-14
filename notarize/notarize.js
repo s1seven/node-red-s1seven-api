@@ -16,13 +16,11 @@ module.exports = function (RED) {
         node.on('input', async (msg, send, done) => {
             const accessToken = msg.accessToken || apiConfig?.accessToken || globalContext.get('accessToken');
             const companyId = msg.companyId || apiConfig?.companyId || globalContext.get('companyId');
-            const mode = msg.mode || apiConfig?.mode;
+            const mode = msg.mode || apiConfig?.mode || 'test';
             const identity = msg.identity || config.identity || globalContext.get('identity');
             const environment = msg.environment || apiConfig?.environment || 'staging';
             const BASE_URL = URL_TO_ENV_MAP[environment];
-            const url = `${DEV_URL ? DEV_URL : BASE_URL}/api/certificates/notarize?identity=${identity}&mode=${
-                mode ? mode : 'test'
-            }`;
+            const url = `${DEV_URL ? DEV_URL : BASE_URL}/api/certificates/notarize`;
             let certificate = msg.payload || globalContext.get('certificate');
 
             if (!accessToken) {
@@ -42,6 +40,10 @@ module.exports = function (RED) {
                             Authorization: `Bearer ${accessToken}`,
                             'Content-Type': 'application/json',
                             company: companyId,
+                        },
+                        params: {
+                            identity,
+                            mode,
                         },
                     });
                     msg.payload = response.data;
