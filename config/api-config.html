@@ -1,11 +1,6 @@
-<script type="text/javascript">
-    const URL_TO_ENV_MAP = {
-        development: 'https://app.s1seven.ovh',
-        staging: 'https://app.s1seven.dev',
-        // production: 'https://app.s1seven.com',
-    };
-    const MODE = ['test', 'live'];
+<script type="text/javascript" src="/resources/@s1seven/node-red-s1seven-api/constants.js"></script>
 
+<script type="text/javascript">
     RED.nodes.registerType('api-config', {
         category: 'config',
         defaults: {
@@ -20,8 +15,6 @@
                 validator: (environment) => Object.keys(URL_TO_ENV_MAP.includes(environment)),
             },
             accessToken: { value: '', required: false },
-
-            identity: { value: '', required: false },
             companyId: { value: '', required: false },
             name: { value: '', required: false },
         },
@@ -64,12 +57,3 @@
         <input type="text" id="node-config-input-name" />
     </div>
 </script>
-
-<!-- <script>
-    const { ALGORITHM_OPTIONS } = require('../constants.js');
-    const selectBox = document.getElementById('node-config-input-algorithm');
-    ALGORITHM_OPTIONS.forEach(algorithm => {
-        const option = document.createElement('option');
-        option.
-    })
-</script> -->

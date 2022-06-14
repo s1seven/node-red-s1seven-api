@@ -1,7 +1,7 @@
 const helper = require('node-red-node-test-helper');
 const identitiesNode = require('../identities/identities.js');
 const axios = require('axios');
-const { URL_TO_ENV_MAP } = require('../constants');
+const { URL_TO_ENV_MAP } = require('../resources/constants');
 const fakeAccessToken = 'test';
 const fakeCompanyId = 'test';
 

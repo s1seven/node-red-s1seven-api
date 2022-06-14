@@ -2,7 +2,7 @@ const helper = require('node-red-node-test-helper');
 const verifyNode = require('../verify/verify.js');
 const certificate = require('../cert.json');
 const axios = require('axios');
-const { URL_TO_ENV_MAP } = require('../constants');
+const { URL_TO_ENV_MAP } = require('../resources/constants');
 const fakeAccessToken = 'test';
 
 jest.mock('axios');

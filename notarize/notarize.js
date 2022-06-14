@@ -4,7 +4,7 @@ module.exports = function (RED) {
     require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
     const DEV_URL = process.env.DEV_URL;
     const axios = require('axios');
-    const { URL_TO_ENV_MAP } = require('../constants');
+    const { URL_TO_ENV_MAP } = require('../resources/constants');
     const validateCertificate = require('../utils/validateCertificate');
 
     function notarize(config) {
@@ -17,7 +17,7 @@ module.exports = function (RED) {
             const accessToken = msg.accessToken || apiConfig?.accessToken;
             const companyId = msg.companyId || apiConfig?.companyId;
             const mode = msg.mode || apiConfig?.test;
-            const identity = msg.identity || globalContext.get('identity');
+            const identity = msg.identity || config.identity || globalContext.get('identity');
             const environment = msg.environment || apiConfig?.environment || 'staging';
             const BASE_URL = URL_TO_ENV_MAP[environment];
             const url = `${DEV_URL ? DEV_URL : BASE_URL}/api/certificates/notarize?identity=${identity}&mode=${

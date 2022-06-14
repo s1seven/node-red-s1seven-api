@@ -4,7 +4,7 @@ module.exports = function (RED) {
     require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
     const DEV_URL = process.env.DEV_URL;
     const axios = require('axios');
-    const { URL_TO_ENV_MAP, ALGORITHM_OPTIONS, ENCODING_OPTIONS } = require('../constants');
+    const { URL_TO_ENV_MAP, ALGORITHM_OPTIONS, ENCODING_OPTIONS } = require('../resources/constants');
     const validateCertificate = require('../utils/validateCertificate');
 
     function hashCertificate(config) {
