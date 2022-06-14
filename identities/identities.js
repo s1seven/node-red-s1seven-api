@@ -18,18 +18,11 @@ module.exports = function (RED) {
             const mode = msg.mode || apiConfig?.mode || 'test';
             const environment = msg.environment || apiConfig?.environment || 'staging';
             const BASE_URL = URL_TO_ENV_MAP[environment];
-            const coinType = msg.coinType || config.coinType;
-            const status = msg.status || config.status;
-            const BIP44Account = msg.BIP44Account || config.BIP44Account;
-            const BIP44Index = msg.BIP44Index || config.BIP44Index;
-            const coinTypeString = coinType ? `coinType=${coinType}&` : '';
-            const statusString = status ? `status=${status}&` : '';
-            const BIP44AccountString = BIP44Account ? `account=${BIP44Account}&` : '';
-            const BIP44IndexString = BIP44Index ? `index=${BIP44Index}&` : '';
-
-            const url = `${
-                DEV_URL ? DEV_URL : BASE_URL
-            }/api/identities?${coinTypeString}${statusString}${BIP44AccountString}${BIP44IndexString}mode=${mode}`;
+            const coinType = msg.coinType || config.coinType || null;
+            const status = msg.status || config.status || null;
+            const BIP44Account = msg.BIP44Account || config.BIP44Account || null;
+            const BIP44Index = msg.BIP44Index || config.BIP44Index || null;
+            const url = `${DEV_URL ? DEV_URL : BASE_URL}/api/identities`;
 
             if (!accessToken) {
                 node.warn(RED._('identity.errors.accessToken'));
@@ -44,6 +37,13 @@ module.exports = function (RED) {
                             Authorization: `Bearer ${accessToken}`,
                             'Content-Type': 'application/json',
                             company: companyId,
+                        },
+                        params: {
+                            coinType,
+                            status,
+                            account: BIP44Account,
+                            index: BIP44Index,
+                            mode,
                         },
                     });
                     msg.payload = response.data;
