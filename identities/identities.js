@@ -12,8 +12,8 @@ module.exports = function (RED) {
         const apiConfig = RED.nodes.getNode(config.apiConfig);
 
         node.on('input', async (msg, send, done) => {
-            const accessToken = msg.accessToken || apiConfig?.accessToken;
-            const companyId = msg.companyId || apiConfig?.companyId;
+            const accessToken = msg.accessToken || apiConfig?.accessToken || globalContext.get('accessToken');
+            const companyId = msg.companyId || apiConfig?.companyId || globalContext.get('companyId');
             const mode = msg.mode || apiConfig?.test;
             const environment = msg.environment || apiConfig?.environment || 'staging';
             const BASE_URL = URL_TO_ENV_MAP[environment];
