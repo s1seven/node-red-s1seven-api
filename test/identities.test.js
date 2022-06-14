@@ -89,6 +89,45 @@ describe('get identities Node', function () {
         });
     });
 
+    it('coin type and status can be set via the ui', function (done) {
+        const BIP44Account = 1;
+        const BIP44Index = 1;
+        const flow = [
+            {
+                id: 'n1',
+                type: 'get identities',
+                name: 'get identities',
+                wires: [],
+                BIP44Account: BIP44Account,
+                BIP44Index: BIP44Index,
+            },
+        ];
+        axios.get.mockResolvedValue({});
+
+        helper.load(identitiesNode, flow, function () {
+            const n1 = helper.getNode('n1');
+            n1.receive({
+                accessToken: fakeAccessToken,
+                companyId: fakeCompanyId,
+            });
+            try {
+                expect(axios.get).toHaveBeenCalledWith(
+                    `${URL_TO_ENV_MAP['staging']}/api/identities?account=${BIP44Account}&index=${BIP44Index}&mode=test`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${fakeAccessToken}`,
+                            'Content-Type': 'application/json',
+                            company: fakeCompanyId,
+                        },
+                    }
+                );
+                done();
+            } catch (error) {
+                done(error);
+            }
+        });
+    });
+
     it('when no accessToken is present, a warning will be shown', function (done) {
         const flow = [
             { id: 'n1', type: 'get identities', name: 'get identities', wires: [['n2']] },
