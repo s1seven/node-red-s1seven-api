@@ -63,7 +63,7 @@ describe('hashing Node', function () {
         });
     });
 
-    it('algorithm and encoding can be overridden', function (done) {
+    it('algorithm and encoding can be overridden via the msg object', function (done) {
         const flow = [{ id: 'n1', type: 'hash', name: 'hash', wires: [] }];
         axios.post.mockResolvedValue({ data: { value: 'hashValue' } });
         const algorithm = 'sha512';
@@ -77,6 +77,39 @@ describe('hashing Node', function () {
                 accessToken: fakeAccessToken,
                 algorithm,
                 encoding,
+            });
+
+            expect(axios.post).toHaveBeenCalledWith(
+                `${URL_TO_ENV_MAP['staging']}/api/certificates/hash`,
+                {
+                    algorithm: algorithm,
+                    encoding: encoding,
+                    source: certificate,
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${fakeAccessToken}`,
+                        'Content-Type': 'application/json',
+                    },
+                }
+            );
+
+            done();
+        });
+    });
+
+    it('algorithm and encoding can be set via the ui', function (done) {
+        const algorithm = 'sha3-256';
+        const encoding = 'base64';
+        const flow = [{ id: 'n1', type: 'hash', name: 'hash', wires: [], algorithm: algorithm, encoding: encoding }];
+        axios.post.mockResolvedValue({ data: { value: 'hashValue' } });
+
+        helper.load(hash, flow, function () {
+            const n1 = helper.getNode('n1');
+
+            n1.receive({
+                payload: certificate,
+                accessToken: fakeAccessToken,
             });
 
             expect(axios.post).toHaveBeenCalledWith(
