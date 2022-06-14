@@ -86,8 +86,9 @@ describe('notarize Node', function () {
             try {
                 expect(spy).toHaveBeenCalled();
                 expect(spy).toHaveBeenCalledTimes(1);
-                // expect(spy).toHaveBeenCalledWith('Please add an access token'); // this does not resolve, hash.errors.accessToken
-                expect(spy).toHaveBeenCalledWith('notarize.errors.accessToken'); // figure out why this doesn't resolve in testing
+                // expect(spy).toHaveBeenCalledWith('Please add an access token');
+                // node-test-helper does not resolve messages, adding the path as a fallback
+                expect(spy).toHaveBeenCalledWith('notarize.errors.accessToken');
                 done();
             } catch (error) {
                 done(error);
@@ -115,7 +116,8 @@ describe('notarize Node', function () {
                 expect(spy).toHaveBeenCalledTimes(1);
                 // expect(spy).toHaveBeenCalledWith(
                 //     'Please add a valid JSON certificate to global.certificate or msg.payload'
-                // ); // this does not resolve in testing
+                // );
+                // node-test-helper does not resolve messages, adding the path as a fallback
                 expect(spy).toHaveBeenCalledWith('notarize.errors.validCertificate'); // figure out why this doesn't resolve in testing
                 done();
             } catch (error) {
@@ -142,8 +144,9 @@ describe('notarize Node', function () {
             try {
                 expect(spy).toHaveBeenCalled();
                 expect(spy).toHaveBeenCalledTimes(1);
-                // expect(spy).toHaveBeenCalledWith('Please add a company id'); // this does not resolve in testing
-                expect(spy).toHaveBeenCalledWith('notarize.errors.companyId'); // figure out why this doesn't resolve in testing
+                // expect(spy).toHaveBeenCalledWith('Please add a company id');
+                // node-test-helper does not resolve messages, adding the path as a fallback
+                expect(spy).toHaveBeenCalledWith('notarize.errors.companyId');
                 done();
             } catch (error) {
                 done(error);
@@ -169,8 +172,9 @@ describe('notarize Node', function () {
             try {
                 expect(spy).toHaveBeenCalled();
                 expect(spy).toHaveBeenCalledTimes(1);
-                // expect(spy).toHaveBeenCalledWith('Please add an identity'); // this does not resolve in testing
-                expect(spy).toHaveBeenCalledWith('notarize.errors.identity'); // figure out why this doesn't resolve in testing
+                // expect(spy).toHaveBeenCalledWith('Please add an identity');
+                // node-test-helper does not resolve messages, adding the path as a fallback
+                expect(spy).toHaveBeenCalledWith('notarize.errors.identity');
                 done();
             } catch (error) {
                 done(error);

@@ -69,8 +69,9 @@ describe('get identities Node', function () {
             try {
                 expect(spy).toHaveBeenCalled();
                 expect(spy).toHaveBeenCalledTimes(1);
-                // expect(spy).toHaveBeenCalledWith('Please add an access token'); // this does not resolve in testing
-                expect(spy).toHaveBeenCalledWith('identity.errors.accessToken'); // figure out how to resolve this
+                // expect(spy).toHaveBeenCalledWith('Please add an access token');
+                // node-test-helper does not resolve messages, adding the path as a fallback
+                expect(spy).toHaveBeenCalledWith('identity.errors.accessToken');
                 done();
             } catch (error) {
                 done(error);
@@ -94,8 +95,9 @@ describe('get identities Node', function () {
             try {
                 expect(spy).toHaveBeenCalled();
                 expect(spy).toHaveBeenCalledTimes(1);
-                // expect(spy).toHaveBeenCalledWith('Please add a company id'); // this does not resolve in testing
-                expect(spy).toHaveBeenCalledWith('identity.errors.companyId'); // figure out how to resolve this
+                // expect(spy).toHaveBeenCalledWith('Please add a company id');
+                // node-test-helper does not resolve messages, adding the path as a fallback
+                expect(spy).toHaveBeenCalledWith('identity.errors.companyId');
                 done();
             } catch (error) {
                 done(error);

@@ -176,7 +176,9 @@ describe('hashing Node', function () {
                 expect(spy).toHaveBeenCalledTimes(1);
                 // expect(spy).toHaveBeenCalledWith(
                 //     'Please add a valid JSON certificate to global.certificate or msg.payload'
-                // ); // this does not resolve, hash.errors.accessToken
+                // );
+                // node-test-helper does not resolve messages, adding the path as a fallback
+                expect(spy).toHaveBeenCalledWith('hash.errors.validCertificate');
                 done();
             } catch (error) {
                 done(error);

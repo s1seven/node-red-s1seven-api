@@ -69,8 +69,9 @@ describe('get company by id Node', function () {
             try {
                 expect(spy).toHaveBeenCalled();
                 expect(spy).toHaveBeenCalledTimes(1);
-                // expect(spy).toHaveBeenCalledWith('Please add an access token'); // this does not resolve, hash.errors.accessToken
-                expect(spy).toHaveBeenCalledWith('company.errors.accessToken'); // figure out how to resolve this
+                // expect(spy).toHaveBeenCalledWith('Please add an access token');
+                // node-test-helper does not resolve messages, adding the path as a fallback
+                expect(spy).toHaveBeenCalledWith('company.errors.accessToken');
                 spy.mockRestore();
                 done();
             } catch (error) {
@@ -94,8 +95,9 @@ describe('get company by id Node', function () {
             try {
                 expect(spy).toHaveBeenCalled();
                 expect(spy).toHaveBeenCalledTimes(1);
-                // expect(spy).toHaveBeenCalledWith('Please add a company id'); // this does not resolve
-                expect(spy).toHaveBeenCalledWith('company.errors.companyId'); // figure out how to resolve this
+                // expect(spy).toHaveBeenCalledWith('Please add a company id');
+                // node-test-helper does not resolve messages, adding the path as a fallback
+                expect(spy).toHaveBeenCalledWith('company.errors.companyId');
                 spy.mockRestore();
                 done();
             } catch (error) {
