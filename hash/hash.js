@@ -12,8 +12,6 @@ module.exports = function (RED) {
         const node = this;
         const globalContext = this.context().global;
         const apiConfig = RED.nodes.getNode(config.apiConfig);
-        let configAlgorithm = config.algorithm;
-        let configEncoding = config.encoding;
 
         node.on('input', async (msg, send, done) => {
             let certificate = msg.payload || globalContext.get('certificate');
@@ -21,8 +19,8 @@ module.exports = function (RED) {
             const environment = msg.environment || apiConfig?.environment || 'staging';
             const BASE_URL = URL_TO_ENV_MAP[environment];
             const url = `${DEV_URL ? DEV_URL : BASE_URL}/api/certificates/hash`;
-            const algorithm = msg.algorithm || configAlgorithm || 'sha256';
-            const encoding = msg.encoding || configEncoding || 'hex';
+            const algorithm = msg.algorithm || config.algorithm || 'sha256';
+            const encoding = msg.encoding || config.encoding || 'hex';
 
             if (!accessToken) {
                 node.warn(RED._('hash.errors.accessToken'));
