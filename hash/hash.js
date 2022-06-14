@@ -2,10 +2,10 @@ module.exports = function (RED) {
     'use strict';
     const path = require('path');
     require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
-    const DEV_URL = process.env.DEV_URL;
     const axios = require('axios');
     const { URL_TO_ENV_MAP, ALGORITHM_OPTIONS, ENCODING_OPTIONS } = require('../resources/constants');
     const validateCertificate = require('../utils/validateCertificate');
+    const DEV_URL = process.env.DEV_URL;
 
     function hashCertificate(config) {
         RED.nodes.createNode(this, config);

@@ -2,9 +2,9 @@ module.exports = function (RED) {
     'use strict';
     const path = require('path');
     require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
-    const DEV_URL = process.env.DEV_URL;
     const axios = require('axios');
     const { URL_TO_ENV_MAP } = require('../resources/constants');
+    const DEV_URL = process.env.DEV_URL;
 
     function getIdentities(config) {
         RED.nodes.createNode(this, config);
