@@ -15,11 +15,15 @@ module.exports = function (RED) {
         node.on('input', async (msg, send, done) => {
             const accessToken = msg.accessToken || apiConfig?.accessToken || globalContext.get('accessToken');
             const companyId = msg.companyId || apiConfig?.companyId || globalContext.get('companyId');
-            const mode = msg.mode || apiConfig?.test;
+            const mode = msg.mode || apiConfig?.mode || 'test';
             const environment = msg.environment || apiConfig?.environment || 'staging';
             const BASE_URL = URL_TO_ENV_MAP[environment];
-            const url = `${DEV_URL ? DEV_URL : BASE_URL}/api/identities?mode=${mode ? mode : 'test'}`;
+            const coinType = msg.coinType || config.coinType;
+            const status = msg.status || config.status;
+            const coinTypeString = coinType ? `coinType=${coinType}&` : '';
+            const statusString = status ? `status=${status}&` : '';
 
+            const url = `${DEV_URL ? DEV_URL : BASE_URL}/api/identities?${coinTypeString}${statusString}mode=${mode}`;
             if (!accessToken) {
                 node.warn(RED._('identity.errors.accessToken'));
                 done();

@@ -5,6 +5,8 @@
         defaults: {
             name: { value: '' },
             apiConfig: { value: '', type: 'api-config' },
+            coinType: { value: '', required: false, validator: (coinType) => COIN_TYPES.includes(coinType) },
+            status: { value: '', required: false, validator: (status) => IDENTITY_STATUS.includes(status) },
         },
         inputs: 1,
         outputs: 1,
@@ -19,6 +21,26 @@
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i><span data-i18n="identities.label.name"></span></label>
         <input type="text" id="node-input-name" placeholder="Name" />
+    </div>
+    <div class="form-row">
+        <label for="node-input-status"
+            ><i class="fa fa-bookmark"></i><span data-i18n="identities.label.status"></span
+        ></label>
+        <select id="node-input-status">
+            <option value="">--</option>
+            <option value="valid">valid</option>
+            <option value="obsolete">obsolete</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-coinType"
+            ><i class="fa fa-bookmark"></i><span data-i18n="identities.label.coinType"></span
+        ></label>
+        <select id="node-input-coinType">
+            <option value="">--</option>
+            <option value="822">822</option>
+            <option value="100000000">100000000</option>
+        </select>
     </div>
     <div class="form-row">
         <label for="node-input-apiConfig"

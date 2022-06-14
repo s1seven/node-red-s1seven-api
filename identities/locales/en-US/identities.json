@@ -2,7 +2,9 @@
     "identities": {
         "label": {
             "apiConfig": " api config",
-            "name": " Name"
+            "name": " Name",
+            "status": " Status",
+            "coinType": " BIP44 coin type"
         },
         "errors": {
             "accessToken": "Please add an access token",
