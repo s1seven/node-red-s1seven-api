@@ -57,6 +57,38 @@ describe('get identities Node', function () {
         });
     });
 
+    it('coin type and status can be set via the ui', function (done) {
+        const coinType = 822;
+        const status = 'live';
+        const flow = [
+            { id: 'n1', type: 'get identities', name: 'get identities', wires: [], status: status, coinType: coinType },
+        ];
+        axios.get.mockResolvedValue({});
+
+        helper.load(identitiesNode, flow, function () {
+            const n1 = helper.getNode('n1');
+            n1.receive({
+                accessToken: fakeAccessToken,
+                companyId: fakeCompanyId,
+            });
+            try {
+                expect(axios.get).toHaveBeenCalledWith(
+                    `${URL_TO_ENV_MAP['staging']}/api/identities?coinType=${coinType}&status=${status}&mode=test`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${fakeAccessToken}`,
+                            'Content-Type': 'application/json',
+                            company: fakeCompanyId,
+                        },
+                    }
+                );
+                done();
+            } catch (error) {
+                done(error);
+            }
+        });
+    });
+
     it('when no accessToken is present, a warning will be shown', function (done) {
         const flow = [
             { id: 'n1', type: 'get identities', name: 'get identities', wires: [['n2']] },
