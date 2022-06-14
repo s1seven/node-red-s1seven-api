@@ -48,8 +48,13 @@ module.exports = function (RED) {
                     send(msg);
                     done();
                 } catch (error) {
-                    node.error(error);
-                    done(error);
+                    if (error instanceof axios.AxiosError) {
+                        node.error(error.response);
+                        done(error.response);
+                    } else {
+                        node.error(error);
+                        done(error);
+                    }
                 }
             } else {
                 node.warn(RED._('notarize.errors.validCertificate'));
