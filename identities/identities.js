@@ -9,6 +9,7 @@ module.exports = function (RED) {
     function getIdentities(config) {
         RED.nodes.createNode(this, config);
         const node = this;
+        const globalContext = this.context().global;
         const apiConfig = RED.nodes.getNode(config.apiConfig);
 
         node.on('input', async (msg, send, done) => {
