@@ -8,6 +8,8 @@ const ENCODING_OPTIONS = ['base64', 'hex'];
 const MODE = ['test', 'live'];
 const COIN_TYPES = [822, 100000000];
 const IDENTITY_STATUS = ['valid', 'obsolete'];
+const ACCOUNT_INDEX_MIN = 0;
+const ACCOUNT_INDEX_MAX = 2147483647;
 
 module.exports = {
     ALGORITHM_OPTIONS,
@@ -16,4 +18,6 @@ module.exports = {
     MODE,
     COIN_TYPES,
     IDENTITY_STATUS,
+    ACCOUNT_INDEX_MIN,
+    ACCOUNT_INDEX_MAX,
 };

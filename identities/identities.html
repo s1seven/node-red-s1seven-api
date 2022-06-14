@@ -5,8 +5,43 @@
         defaults: {
             name: { value: '' },
             apiConfig: { value: '', type: 'api-config' },
-            coinType: { value: '', required: false, validator: (coinType) => COIN_TYPES.includes(coinType) },
-            status: { value: '', required: false, validator: (status) => IDENTITY_STATUS.includes(status) },
+            coinType: {
+                value: '',
+                required: false,
+                validate: (input) => {
+                    if (!input) return true;
+                    return COIN_TYPES.includes(Number(input));
+                },
+            },
+
+            status: {
+                value: '',
+                required: false,
+                validate: (input) => {
+                    if (!input) return true;
+                    return IDENTITY_STATUS.includes(input);
+                },
+            },
+            BIP44Account: {
+                value: '',
+                required: false,
+                validate: (BIP44Account) => {
+                    return (
+                        !Number.isNaN(BIP44Account) &&
+                        BIP44Account >= ACCOUNT_INDEX_MIN &&
+                        BIP44Account <= ACCOUNT_INDEX_MAX
+                    );
+                },
+            },
+            BIP44Index: {
+                value: '',
+                required: false,
+                validate: (BIP44Index) => {
+                    return (
+                        !Number.isNaN(BIP44Index) && BIP44Index >= ACCOUNT_INDEX_MIN && BIP44Index <= ACCOUNT_INDEX_MAX
+                    );
+                },
+            },
         },
         inputs: 1,
         outputs: 1,
@@ -21,6 +56,18 @@
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i><span data-i18n="identities.label.name"></span></label>
         <input type="text" id="node-input-name" placeholder="Name" />
+    </div>
+    <div class="form-row">
+        <label for="node-input-BIP44Account"
+            ><i class="fa fa-tag"></i><span data-i18n="identities.label.BIP44Account"></span
+        ></label>
+        <input type="number" id="node-input-BIP44Account" placeholder="BIP44 Account" />
+    </div>
+    <div class="form-row">
+        <label for="node-input-BIP44Index"
+            ><i class="fa fa-tag"></i><span data-i18n="identities.label.BIP44Index"></span
+        ></label>
+        <input type="number" id="node-input-BIP44Index" placeholder="BIP44 Index" />
     </div>
     <div class="form-row">
         <label for="node-input-status"

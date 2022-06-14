@@ -20,10 +20,17 @@ module.exports = function (RED) {
             const BASE_URL = URL_TO_ENV_MAP[environment];
             const coinType = msg.coinType || config.coinType;
             const status = msg.status || config.status;
+            const BIP44Account = msg.BIP44Account || config.BIP44Account;
+            const BIP44Index = msg.BIP44Index || config.BIP44Index;
             const coinTypeString = coinType ? `coinType=${coinType}&` : '';
             const statusString = status ? `status=${status}&` : '';
+            const BIP44AccountString = BIP44Account ? `account=${BIP44Account}&` : '';
+            const BIP44IndexString = BIP44Index ? `index=${BIP44Index}&` : '';
 
-            const url = `${DEV_URL ? DEV_URL : BASE_URL}/api/identities?${coinTypeString}${statusString}mode=${mode}`;
+            const url = `${
+                DEV_URL ? DEV_URL : BASE_URL
+            }/api/identities?${coinTypeString}${statusString}${BIP44AccountString}${BIP44IndexString}mode=${mode}`;
+
             if (!accessToken) {
                 node.warn(RED._('identity.errors.accessToken'));
                 done();
