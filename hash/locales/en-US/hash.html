@@ -57,10 +57,11 @@
     </p>
     <p>
         <code>accessToken</code> is used to authenticate the HTTP request. To find out to generate an access token, look
-        at the documentation at <a>https://manual.s1seven.com</a> under the developers section.
+        at the documentation at <a>https://manual.s1seven.com</a> under the developers section. It can be input via
+        <code>msg.accessToken</code>, via the ui which can be found be double-clicking on the <code>hash</code> node, or
+        via <code>global.accessToken</code>, in that order of priority.
     </p>
 
-    <p>It can also be passed in using the api-config node, found by double-clicking on the hash node.</p>
     <p>
         <code>msg.environment</code> allows you to pass in the string value <code>staging</code> or
         <code>development</code> to choose which server you wish to use.
