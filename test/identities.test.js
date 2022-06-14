@@ -43,11 +43,18 @@ describe('get identities Node', function () {
                 companyId: fakeCompanyId,
             });
             try {
-                expect(axios.get).toHaveBeenCalledWith(`${URL_TO_ENV_MAP['staging']}/api/identities?mode=test`, {
+                expect(axios.get).toHaveBeenCalledWith(`${URL_TO_ENV_MAP['staging']}/api/identities`, {
                     headers: {
                         Authorization: `Bearer ${fakeAccessToken}`,
                         'Content-Type': 'application/json',
                         company: fakeCompanyId,
+                    },
+                    params: {
+                        coinType: null,
+                        status: null,
+                        account: null,
+                        index: null,
+                        mode: 'test',
                     },
                 });
                 done();
@@ -72,16 +79,20 @@ describe('get identities Node', function () {
                 companyId: fakeCompanyId,
             });
             try {
-                expect(axios.get).toHaveBeenCalledWith(
-                    `${URL_TO_ENV_MAP['staging']}/api/identities?coinType=${coinType}&status=${status}&mode=test`,
-                    {
-                        headers: {
-                            Authorization: `Bearer ${fakeAccessToken}`,
-                            'Content-Type': 'application/json',
-                            company: fakeCompanyId,
-                        },
-                    }
-                );
+                expect(axios.get).toHaveBeenCalledWith(`${URL_TO_ENV_MAP['staging']}/api/identities`, {
+                    headers: {
+                        Authorization: `Bearer ${fakeAccessToken}`,
+                        'Content-Type': 'application/json',
+                        company: fakeCompanyId,
+                    },
+                    params: {
+                        coinType,
+                        status,
+                        account: null,
+                        index: null,
+                        mode: 'test',
+                    },
+                });
                 done();
             } catch (error) {
                 done(error);
@@ -111,16 +122,20 @@ describe('get identities Node', function () {
                 companyId: fakeCompanyId,
             });
             try {
-                expect(axios.get).toHaveBeenCalledWith(
-                    `${URL_TO_ENV_MAP['staging']}/api/identities?account=${BIP44Account}&index=${BIP44Index}&mode=test`,
-                    {
-                        headers: {
-                            Authorization: `Bearer ${fakeAccessToken}`,
-                            'Content-Type': 'application/json',
-                            company: fakeCompanyId,
-                        },
-                    }
-                );
+                expect(axios.get).toHaveBeenCalledWith(`${URL_TO_ENV_MAP['staging']}/api/identities`, {
+                    headers: {
+                        Authorization: `Bearer ${fakeAccessToken}`,
+                        'Content-Type': 'application/json',
+                        company: fakeCompanyId,
+                    },
+                    params: {
+                        coinType: null,
+                        status: null,
+                        account: BIP44Account,
+                        index: BIP44Index,
+                        mode: 'test',
+                    },
+                });
                 done();
             } catch (error) {
                 done(error);
