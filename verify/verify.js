@@ -15,10 +15,10 @@ module.exports = function (RED) {
         node.on('input', async (msg, send, done) => {
             const apiConfig = RED.nodes.getNode(config.apiConfig);
             let certificate = msg.payload || globalContext.get('certificate');
-            const mode = msg.mode || apiConfig?.mode;
+            const mode = msg.mode || apiConfig?.mode || 'test';
             const environment = msg.environment || apiConfig?.environment || 'staging';
             const BASE_URL = URL_TO_ENV_MAP[environment];
-            const url = `${DEV_URL ? DEV_URL : BASE_URL}/api/certificates/verify/?mode=${mode ? mode : 'test'}`;
+            const url = `${DEV_URL ? DEV_URL : BASE_URL}/api/certificates/verify/?mode=${mode}`;
 
             if (certificate) {
                 try {
