@@ -42,14 +42,18 @@ describe('get identities Node', function () {
                 accessToken: fakeAccessToken,
                 companyId: fakeCompanyId,
             });
-            expect(axios.get).toHaveBeenCalledWith(`${URL_TO_ENV_MAP['staging']}/api/identities?mode=test`, {
-                headers: {
-                    Authorization: `Bearer ${fakeAccessToken}`,
-                    'Content-Type': 'application/json',
-                    company: fakeCompanyId,
-                },
-            });
-            done();
+            try {
+                expect(axios.get).toHaveBeenCalledWith(`${URL_TO_ENV_MAP['staging']}/api/identities?mode=test`, {
+                    headers: {
+                        Authorization: `Bearer ${fakeAccessToken}`,
+                        'Content-Type': 'application/json',
+                        company: fakeCompanyId,
+                    },
+                });
+                done();
+            } catch (error) {
+                done(error);
+            }
         });
     });
 
@@ -62,12 +66,16 @@ describe('get identities Node', function () {
             const n1 = helper.getNode('n1');
             const spy = jest.spyOn(n1, 'warn');
             n1.receive({ companyId: fakeCompanyId });
-            expect(spy).toHaveBeenCalled();
-            expect(spy).toHaveBeenCalledTimes(1);
-            // expect(spy).toHaveBeenCalledWith('Please add an access token'); // this does not resolve in testing
-            expect(spy).toHaveBeenCalledWith('identity.errors.accessToken'); // figure out how to resolve this
+            try {
+                expect(spy).toHaveBeenCalled();
+                expect(spy).toHaveBeenCalledTimes(1);
+                // expect(spy).toHaveBeenCalledWith('Please add an access token'); // this does not resolve in testing
+                expect(spy).toHaveBeenCalledWith('identity.errors.accessToken'); // figure out how to resolve this
+                done();
+            } catch (error) {
+                done(error);
+            }
             spy.mockRestore();
-            done();
         });
     });
 
@@ -83,12 +91,16 @@ describe('get identities Node', function () {
             n1.receive({
                 accessToken: fakeAccessToken,
             });
-            expect(spy).toHaveBeenCalled();
-            expect(spy).toHaveBeenCalledTimes(1);
-            // expect(spy).toHaveBeenCalledWith('Please add a company id'); // this does not resolve in testing
-            expect(spy).toHaveBeenCalledWith('identity.errors.companyId'); // figure out how to resolve this
+            try {
+                expect(spy).toHaveBeenCalled();
+                expect(spy).toHaveBeenCalledTimes(1);
+                // expect(spy).toHaveBeenCalledWith('Please add a company id'); // this does not resolve in testing
+                expect(spy).toHaveBeenCalledWith('identity.errors.companyId'); // figure out how to resolve this
+                done();
+            } catch (error) {
+                done(error);
+            }
             spy.mockRestore();
-            done();
         });
     });
 });

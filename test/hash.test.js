@@ -79,22 +79,26 @@ describe('hashing Node', function () {
                 encoding,
             });
 
-            expect(axios.post).toHaveBeenCalledWith(
-                `${URL_TO_ENV_MAP['staging']}/api/certificates/hash`,
-                {
-                    algorithm: algorithm,
-                    encoding: encoding,
-                    source: certificate,
-                },
-                {
-                    headers: {
-                        Authorization: `Bearer ${fakeAccessToken}`,
-                        'Content-Type': 'application/json',
+            try {
+                expect(axios.post).toHaveBeenCalledWith(
+                    `${URL_TO_ENV_MAP['staging']}/api/certificates/hash`,
+                    {
+                        algorithm: algorithm,
+                        encoding: encoding,
+                        source: certificate,
                     },
-                }
-            );
+                    {
+                        headers: {
+                            Authorization: `Bearer ${fakeAccessToken}`,
+                            'Content-Type': 'application/json',
+                        },
+                    }
+                );
 
-            done();
+                done();
+            } catch (error) {
+                done(error);
+            }
         });
     });
 
@@ -112,22 +116,26 @@ describe('hashing Node', function () {
                 accessToken: fakeAccessToken,
             });
 
-            expect(axios.post).toHaveBeenCalledWith(
-                `${URL_TO_ENV_MAP['staging']}/api/certificates/hash`,
-                {
-                    algorithm: algorithm,
-                    encoding: encoding,
-                    source: certificate,
-                },
-                {
-                    headers: {
-                        Authorization: `Bearer ${fakeAccessToken}`,
-                        'Content-Type': 'application/json',
+            try {
+                expect(axios.post).toHaveBeenCalledWith(
+                    `${URL_TO_ENV_MAP['staging']}/api/certificates/hash`,
+                    {
+                        algorithm: algorithm,
+                        encoding: encoding,
+                        source: certificate,
                     },
-                }
-            );
+                    {
+                        headers: {
+                            Authorization: `Bearer ${fakeAccessToken}`,
+                            'Content-Type': 'application/json',
+                        },
+                    }
+                );
 
-            done();
+                done();
+            } catch (error) {
+                done(error);
+            }
         });
     });
 
@@ -140,12 +148,16 @@ describe('hashing Node', function () {
             const n1 = helper.getNode('n1');
             const spy = jest.spyOn(n1, 'warn');
             n1.receive({ payload: certificate });
-            expect(spy).toHaveBeenCalled();
-            expect(spy).toHaveBeenCalledTimes(1);
-            // expect(spy).toHaveBeenCalledWith('Please add an access token'); // this does not resolve, hash.errors.accessToken
-            // expect(spy).toHaveBeenCalledWith('hash.errors.accessToken');
+            try {
+                expect(spy).toHaveBeenCalled();
+                expect(spy).toHaveBeenCalledTimes(1);
+                // expect(spy).toHaveBeenCalledWith('Please add an access token'); // this does not resolve, hash.errors.accessToken
+                // expect(spy).toHaveBeenCalledWith('hash.errors.accessToken');
+                done();
+            } catch (error) {
+                done(error);
+            }
             spy.mockRestore();
-            done();
         });
     });
 
@@ -159,13 +171,17 @@ describe('hashing Node', function () {
             const n1 = helper.getNode('n1');
             const spy = jest.spyOn(n1, 'warn');
             n1.receive({ accessToken: fakeAccessToken });
-            expect(spy).toHaveBeenCalled();
-            expect(spy).toHaveBeenCalledTimes(1);
-            // expect(spy).toHaveBeenCalledWith(
-            //     'Please add a valid JSON certificate to global.certificate or msg.payload'
-            // ); // this does not resolve, hash.errors.accessToken
+            try {
+                expect(spy).toHaveBeenCalled();
+                expect(spy).toHaveBeenCalledTimes(1);
+                // expect(spy).toHaveBeenCalledWith(
+                //     'Please add a valid JSON certificate to global.certificate or msg.payload'
+                // ); // this does not resolve, hash.errors.accessToken
+                done();
+            } catch (error) {
+                done(error);
+            }
             spy.mockRestore();
-            done();
         });
     });
 });
