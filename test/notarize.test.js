@@ -51,13 +51,17 @@ describe('notarize Node', function () {
 
             try {
                 expect(axios.post).toHaveBeenCalledWith(
-                    `${URL_TO_ENV_MAP['staging']}/api/certificates/notarize?identity=${fakeIdentity}&mode=test`,
+                    `${URL_TO_ENV_MAP['staging']}/api/certificates/notarize`,
                     certificate,
                     {
                         headers: {
                             Authorization: `Bearer ${fakeAccessToken}`,
                             'Content-Type': 'application/json',
                             company: fakeCompanyId,
+                        },
+                        params: {
+                            identity: fakeIdentity,
+                            mode: 'test',
                         },
                     }
                 );
