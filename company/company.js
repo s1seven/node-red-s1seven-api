@@ -2,9 +2,9 @@ module.exports = function (RED) {
     'use strict';
     const path = require('path');
     require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
-    const DEV_URL = process.env.DEV_URL;
     const axios = require('axios');
-    const { URL_TO_ENV_MAP } = require('../constants');
+    const { URL_TO_ENV_MAP } = require('../resources/constants');
+    const DEV_URL = process.env.DEV_URL;
 
     function getCompany(config) {
         RED.nodes.createNode(this, config);
@@ -36,8 +36,13 @@ module.exports = function (RED) {
                     send(msg);
                     done();
                 } catch (error) {
-                    node.error(error);
-                    done(error);
+                    if (error instanceof axios.AxiosError) {
+                        node.error(error.response);
+                        done(error.response);
+                    } else {
+                        node.error(error);
+                        done(error);
+                    }
                 }
             }
         });

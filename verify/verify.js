@@ -2,10 +2,10 @@ module.exports = function (RED) {
     'use strict';
     const path = require('path');
     require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
-    const DEV_URL = process.env.DEV_URL;
     const axios = require('axios');
-    const { URL_TO_ENV_MAP } = require('../constants');
+    const { URL_TO_ENV_MAP } = require('../resources/constants');
     const validateCertificate = require('../utils/validateCertificate');
+    const DEV_URL = process.env.DEV_URL;
 
     function verifyCertificateNode(config) {
         RED.nodes.createNode(this, config);
@@ -15,10 +15,10 @@ module.exports = function (RED) {
         node.on('input', async (msg, send, done) => {
             const apiConfig = RED.nodes.getNode(config.apiConfig);
             let certificate = msg.payload || globalContext.get('certificate');
-            const mode = msg.mode || apiConfig?.test;
+            const mode = msg.mode || apiConfig?.mode || 'test';
             const environment = msg.environment || apiConfig?.environment || 'staging';
             const BASE_URL = URL_TO_ENV_MAP[environment];
-            const url = `${DEV_URL ? DEV_URL : BASE_URL}/api/certificates/verify/?mode=${mode ? mode : 'test'}`;
+            const url = `${DEV_URL ? DEV_URL : BASE_URL}/api/certificates/verify/?mode=${mode}`;
 
             if (certificate) {
                 try {
@@ -32,8 +32,13 @@ module.exports = function (RED) {
                     send(msg);
                     done();
                 } catch (error) {
-                    node.error(error);
-                    done(error);
+                    if (error instanceof axios.AxiosError) {
+                        node.error(error.response);
+                        done(error.response);
+                    } else {
+                        node.error(error);
+                        done(error);
+                    }
                 }
             } else {
                 node.warn(RED._('verify.errors.validCertificate'));

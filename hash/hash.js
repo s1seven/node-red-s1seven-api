@@ -2,10 +2,10 @@ module.exports = function (RED) {
     'use strict';
     const path = require('path');
     require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
-    const DEV_URL = process.env.DEV_URL;
     const axios = require('axios');
-    const { URL_TO_ENV_MAP, ALGORITHM_OPTIONS, ENCODING_OPTIONS } = require('../constants');
+    const { URL_TO_ENV_MAP, ALGORITHM_OPTIONS, ENCODING_OPTIONS } = require('../resources/constants');
     const validateCertificate = require('../utils/validateCertificate');
+    const DEV_URL = process.env.DEV_URL;
 
     function hashCertificate(config) {
         RED.nodes.createNode(this, config);
@@ -15,12 +15,12 @@ module.exports = function (RED) {
 
         node.on('input', async (msg, send, done) => {
             let certificate = msg.payload || globalContext.get('certificate');
-            const accessToken = msg.accessToken || apiConfig?.accessToken;
+            const accessToken = msg.accessToken || apiConfig?.accessToken || globalContext.get('accessToken');
             const environment = msg.environment || apiConfig?.environment || 'staging';
             const BASE_URL = URL_TO_ENV_MAP[environment];
             const url = `${DEV_URL ? DEV_URL : BASE_URL}/api/certificates/hash`;
-            const algorithm = msg.algorithm || 'sha256';
-            const encoding = msg.encoding || 'hex';
+            const algorithm = msg.algorithm || config.algorithm || 'sha256';
+            const encoding = msg.encoding || config.encoding || 'hex';
 
             if (!accessToken) {
                 node.warn(RED._('hash.errors.accessToken'));
@@ -52,8 +52,13 @@ module.exports = function (RED) {
                     send(msg);
                     done();
                 } catch (error) {
-                    node.error(error);
-                    done(error);
+                    if (error instanceof axios.AxiosError) {
+                        node.error(error.response);
+                        done(error.response);
+                    } else {
+                        node.error(error);
+                        done(error);
+                    }
                 }
             } else {
                 node.warn(RED._('hash.errors.validCertificate'));

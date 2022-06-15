@@ -1,7 +1,7 @@
 const helper = require('node-red-node-test-helper');
 const identitiesNode = require('../identities/identities.js');
 const axios = require('axios');
-const { URL_TO_ENV_MAP } = require('../constants');
+const { URL_TO_ENV_MAP } = require('../resources/constants');
 const fakeAccessToken = 'test';
 const fakeCompanyId = 'test';
 
@@ -42,14 +42,104 @@ describe('get identities Node', function () {
                 accessToken: fakeAccessToken,
                 companyId: fakeCompanyId,
             });
-            expect(axios.get).toHaveBeenCalledWith(`${URL_TO_ENV_MAP['staging']}/api/identities?mode=test`, {
-                headers: {
-                    Authorization: `Bearer ${fakeAccessToken}`,
-                    'Content-Type': 'application/json',
-                    company: fakeCompanyId,
-                },
+            try {
+                expect(axios.get).toHaveBeenCalledWith(`${URL_TO_ENV_MAP['staging']}/api/identities`, {
+                    headers: {
+                        Authorization: `Bearer ${fakeAccessToken}`,
+                        'Content-Type': 'application/json',
+                        company: fakeCompanyId,
+                    },
+                    params: {
+                        coinType: null,
+                        status: null,
+                        account: null,
+                        index: null,
+                        mode: 'test',
+                    },
+                });
+                done();
+            } catch (error) {
+                done(error);
+            }
+        });
+    });
+
+    it('coin type and status can be set via the ui', function (done) {
+        const coinType = 822;
+        const status = 'live';
+        const flow = [
+            { id: 'n1', type: 'get identities', name: 'get identities', wires: [], status: status, coinType: coinType },
+        ];
+        axios.get.mockResolvedValue({});
+
+        helper.load(identitiesNode, flow, function () {
+            const n1 = helper.getNode('n1');
+            n1.receive({
+                accessToken: fakeAccessToken,
+                companyId: fakeCompanyId,
             });
-            done();
+            try {
+                expect(axios.get).toHaveBeenCalledWith(`${URL_TO_ENV_MAP['staging']}/api/identities`, {
+                    headers: {
+                        Authorization: `Bearer ${fakeAccessToken}`,
+                        'Content-Type': 'application/json',
+                        company: fakeCompanyId,
+                    },
+                    params: {
+                        coinType,
+                        status,
+                        account: null,
+                        index: null,
+                        mode: 'test',
+                    },
+                });
+                done();
+            } catch (error) {
+                done(error);
+            }
+        });
+    });
+
+    it('coin type and status can be set via the ui', function (done) {
+        const BIP44Account = 1;
+        const BIP44Index = 1;
+        const flow = [
+            {
+                id: 'n1',
+                type: 'get identities',
+                name: 'get identities',
+                wires: [],
+                BIP44Account: BIP44Account,
+                BIP44Index: BIP44Index,
+            },
+        ];
+        axios.get.mockResolvedValue({});
+
+        helper.load(identitiesNode, flow, function () {
+            const n1 = helper.getNode('n1');
+            n1.receive({
+                accessToken: fakeAccessToken,
+                companyId: fakeCompanyId,
+            });
+            try {
+                expect(axios.get).toHaveBeenCalledWith(`${URL_TO_ENV_MAP['staging']}/api/identities`, {
+                    headers: {
+                        Authorization: `Bearer ${fakeAccessToken}`,
+                        'Content-Type': 'application/json',
+                        company: fakeCompanyId,
+                    },
+                    params: {
+                        coinType: null,
+                        status: null,
+                        account: BIP44Account,
+                        index: BIP44Index,
+                        mode: 'test',
+                    },
+                });
+                done();
+            } catch (error) {
+                done(error);
+            }
         });
     });
 
@@ -62,12 +152,17 @@ describe('get identities Node', function () {
             const n1 = helper.getNode('n1');
             const spy = jest.spyOn(n1, 'warn');
             n1.receive({ companyId: fakeCompanyId });
-            expect(spy).toHaveBeenCalled();
-            expect(spy).toHaveBeenCalledTimes(1);
-            // expect(spy).toHaveBeenCalledWith('Please add an access token'); // this does not resolve in testing
-            expect(spy).toHaveBeenCalledWith('identity.errors.accessToken'); // figure out how to resolve this
+            try {
+                expect(spy).toHaveBeenCalled();
+                expect(spy).toHaveBeenCalledTimes(1);
+                // expect(spy).toHaveBeenCalledWith('Please add an access token');
+                // node-test-helper does not resolve messages, adding the path as a fallback
+                expect(spy).toHaveBeenCalledWith('identity.errors.accessToken');
+                done();
+            } catch (error) {
+                done(error);
+            }
             spy.mockRestore();
-            done();
         });
     });
 
@@ -83,12 +178,17 @@ describe('get identities Node', function () {
             n1.receive({
                 accessToken: fakeAccessToken,
             });
-            expect(spy).toHaveBeenCalled();
-            expect(spy).toHaveBeenCalledTimes(1);
-            // expect(spy).toHaveBeenCalledWith('Please add a company id'); // this does not resolve in testing
-            expect(spy).toHaveBeenCalledWith('identity.errors.companyId'); // figure out how to resolve this
+            try {
+                expect(spy).toHaveBeenCalled();
+                expect(spy).toHaveBeenCalledTimes(1);
+                // expect(spy).toHaveBeenCalledWith('Please add a company id');
+                // node-test-helper does not resolve messages, adding the path as a fallback
+                expect(spy).toHaveBeenCalledWith('identity.errors.companyId');
+                done();
+            } catch (error) {
+                done(error);
+            }
             spy.mockRestore();
-            done();
         });
     });
 });

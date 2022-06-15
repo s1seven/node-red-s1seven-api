@@ -2,7 +2,8 @@
     "notarize": {
         "label": {
             "apiConfig": " api config",
-            "name": " Name"
+            "name": " Name",
+            "identity": " Identity"
         },
         "errors": {
             "accessToken": "Please add an access token",

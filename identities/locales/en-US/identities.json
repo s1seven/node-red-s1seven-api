@@ -1,8 +1,12 @@
 {
-    "identity": {
+    "identities": {
         "label": {
             "apiConfig": " api config",
-            "name": " Name"
+            "name": " Name",
+            "status": " Status",
+            "coinType": " BIP44 coin type",
+            "BIP44Account": " BIP44 Account number",
+            "BIP44Index": " BIP44 Index number"
         },
         "errors": {
             "accessToken": "Please add an access token",

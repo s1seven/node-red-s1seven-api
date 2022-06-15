@@ -1,9 +1,25 @@
+<script type="text/javascript" src="/resources/@s1seven/node-red-s1seven-api/constants.js"></script>
+
 <script type="text/javascript">
     RED.nodes.registerType('api-config', {
         category: 'config',
         defaults: {
-            mode: { value: '', required: false },
-            app: { value: '', required: true },
+            mode: {
+                value: '',
+                required: false,
+                validate: (input) => {
+                    if (!input) return true;
+                    return MODE.includes(input);
+                },
+            },
+            environment: {
+                value: '',
+                required: false,
+                validate: (input) => {
+                    if (!input) return true;
+                    return Object.keys(URL_TO_ENV_MAP).includes(input);
+                },
+            },
             accessToken: { value: '', required: false },
             companyId: { value: '', required: false },
             name: { value: '', required: false },
@@ -19,15 +35,17 @@
     <div class="form-row">
         <label for="node-config-input-mode"><i class="fa fa-bookmark"></i><span data-i18n="config.label.mode"></label>
         <select id="node-config-input-mode">
+            <option value="">--</option>
             <option selected value="test">test</option>
             <option value="live">live</option>
         </select>
     </div>
     <div class="form-row">
-        <label for="node-config-input-app"><i class="fa fa-bookmark"></i><span data-i18n="config.label.app"></span></label>
-        <select id="node-config-input-app">
-            <option selected value="dev">.dev</option>
-            <option value="ovh">.ovh</option>
+        <label for="node-config-input-environment"><i class="fa fa-bookmark"></i><span data-i18n="config.label.environment"></span></label>
+        <select id="node-config-input-environment">
+            <option value="">--</option>
+            <option selected value="staging">staging</option>
+            <option value="development">development</option>
         </select>
     </div>
     <div class="form-row">

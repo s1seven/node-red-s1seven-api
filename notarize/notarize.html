@@ -5,6 +5,7 @@
         defaults: {
             name: { value: '' },
             apiConfig: { value: '', type: 'api-config' },
+            identity: { value: '', required: false },
         },
         inputs: 1,
         outputs: 1,
@@ -25,5 +26,11 @@
             ><i class="fa fa-tag"></i><span data-i18n="notarize.label.apiConfig"></span
         ></label>
         <input type="text" id="node-input-apiConfig" placeholder="api-config" />
+    </div>
+    <div class="form-row">
+        <label for="node-input-identity"
+            ><i class="fa fa-tag"></i><span data-i18n="notarize.label.identity"></span
+        ></label>
+        <input type="text" id="node-input-identity" placeholder="identity" />
     </div>
 </script>

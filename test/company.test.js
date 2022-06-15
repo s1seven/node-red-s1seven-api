@@ -1,7 +1,7 @@
 const helper = require('node-red-node-test-helper');
 const companyNode = require('../company/company.js');
 const axios = require('axios');
-const { URL_TO_ENV_MAP } = require('../constants');
+const { URL_TO_ENV_MAP } = require('../resources/constants');
 const fakeAccessToken = 'test';
 const fakeCompanyId = 'test';
 
@@ -43,13 +43,17 @@ describe('get company by id Node', function () {
                 accessToken: fakeAccessToken,
                 companyId: fakeCompanyId,
             });
-            expect(axios.get).toHaveBeenCalledWith(`${URL_TO_ENV_MAP['staging']}/api/companies/${fakeCompanyId}`, {
-                headers: {
-                    Authorization: `Bearer ${fakeAccessToken}`,
-                    'Content-Type': 'application/json',
-                },
-            });
-            done();
+            try {
+                expect(axios.get).toHaveBeenCalledWith(`${URL_TO_ENV_MAP['staging']}/api/companies/${fakeCompanyId}`, {
+                    headers: {
+                        Authorization: `Bearer ${fakeAccessToken}`,
+                        'Content-Type': 'application/json',
+                    },
+                });
+                done();
+            } catch (error) {
+                done(error);
+            }
         });
     });
 
@@ -62,12 +66,17 @@ describe('get company by id Node', function () {
             const n1 = helper.getNode('n1');
             const spy = jest.spyOn(n1, 'warn');
             n1.receive({ companyId: fakeCompanyId });
-            expect(spy).toHaveBeenCalled();
-            expect(spy).toHaveBeenCalledTimes(1);
-            // expect(spy).toHaveBeenCalledWith('Please add an access token'); // this does not resolve, hash.errors.accessToken
-            expect(spy).toHaveBeenCalledWith('company.errors.accessToken'); // figure out how to resolve this
-            spy.mockRestore();
-            done();
+            try {
+                expect(spy).toHaveBeenCalled();
+                expect(spy).toHaveBeenCalledTimes(1);
+                // expect(spy).toHaveBeenCalledWith('Please add an access token');
+                // node-test-helper does not resolve messages, adding the path as a fallback
+                expect(spy).toHaveBeenCalledWith('company.errors.accessToken');
+                spy.mockRestore();
+                done();
+            } catch (error) {
+                done(error);
+            }
         });
     });
 
@@ -83,12 +92,17 @@ describe('get company by id Node', function () {
             n1.receive({
                 accessToken: fakeAccessToken,
             });
-            expect(spy).toHaveBeenCalled();
-            expect(spy).toHaveBeenCalledTimes(1);
-            // expect(spy).toHaveBeenCalledWith('Please add a company id'); // this does not resolve
-            expect(spy).toHaveBeenCalledWith('company.errors.companyId'); // figure out how to resolve this
-            spy.mockRestore();
-            done();
+            try {
+                expect(spy).toHaveBeenCalled();
+                expect(spy).toHaveBeenCalledTimes(1);
+                // expect(spy).toHaveBeenCalledWith('Please add a company id');
+                // node-test-helper does not resolve messages, adding the path as a fallback
+                expect(spy).toHaveBeenCalledWith('company.errors.companyId');
+                spy.mockRestore();
+                done();
+            } catch (error) {
+                done(error);
+            }
         });
     });
 });

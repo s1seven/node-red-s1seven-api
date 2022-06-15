@@ -2,7 +2,7 @@ const helper = require('node-red-node-test-helper');
 const verifyNode = require('../verify/verify.js');
 const certificate = require('../cert.json');
 const axios = require('axios');
-const { URL_TO_ENV_MAP } = require('../constants');
+const { URL_TO_ENV_MAP } = require('../resources/constants');
 const fakeAccessToken = 'test';
 
 jest.mock('axios');
@@ -56,16 +56,20 @@ describe('verify Node', function () {
                 payload: certificate,
                 accessToken: fakeAccessToken,
             });
-            expect(axios.post).toHaveBeenCalledWith(
-                `${URL_TO_ENV_MAP['staging']}/api/certificates/verify/?mode=test`,
-                certificate,
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                }
-            );
-            done();
+            try {
+                expect(axios.post).toHaveBeenCalledWith(
+                    `${URL_TO_ENV_MAP['staging']}/api/certificates/verify/?mode=test`,
+                    certificate,
+                    {
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    }
+                );
+                done();
+            } catch (error) {
+                done(error);
+            }
         });
     });
 
@@ -83,13 +87,19 @@ describe('verify Node', function () {
             const n1 = helper.getNode('n1');
             const spy = jest.spyOn(n1, 'warn');
             n1.receive({ accessToken: fakeAccessToken });
-            expect(spy).toHaveBeenCalled();
-            expect(spy).toHaveBeenCalledTimes(1);
-            // expect(spy).toHaveBeenCalledWith(
-            //     'Please add a valid JSON certificate to global.certificate or msg.payload'
-            // ); // this does not resolve, verify.errors.accessToken
+            try {
+                expect(spy).toHaveBeenCalled();
+                expect(spy).toHaveBeenCalledTimes(1);
+                // expect(spy).toHaveBeenCalledWith(
+                //     'Please add a valid JSON certificate to global.certificate or msg.payload'
+                // );
+                // node-test-helper does not resolve messages, adding the path as a fallback
+                expect(spy).toHaveBeenCalledWith('verify.errors.validCertificate');
+                done();
+            } catch (error) {
+                done(error);
+            }
             spy.mockRestore();
-            done();
         });
     });
 });

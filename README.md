@@ -16,3 +16,5 @@ Each node simply takes the required input via the config ui or the `msg` object,
 
 For development and testing purposes, the URL can be overridden by adding a `.env` file with a `DEV_URL` property. For example, having `DEV_URL="http://localhost:4200"` in your `.env` file will mean `http://localhost:4200` is used instead of the default URL. If the `DEV_URL` property is not present in your `.env` file, the default URL will be used.
 NOTE: If `DEV_URL` is present in the `.env` file, the tests will fail. Remove the property if necessary so the tests will pass.
+
+The `constants.js` file can be found in the `resources` folder, as that allows the variables to be shared with the frontend using Node-Red.

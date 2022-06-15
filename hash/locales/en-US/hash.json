@@ -2,7 +2,9 @@
     "hash": {
         "label": {
             "apiConfig": " api config",
-            "name": " Name"
+            "name": " Name",
+            "algorithm": " Algorithm",
+            "encoding": " Encoding"
         },
         "errors": {
             "accessToken": "Please add an access token",
