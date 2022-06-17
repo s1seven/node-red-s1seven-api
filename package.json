@@ -1,6 +1,6 @@
 {
     "name": "@s1seven/node-red-s1seven-api",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Nodes that interact with S1Seven's API",
     "scripts": {
         "test": "jest",
@@ -24,10 +24,10 @@
         }
     },
     "dependencies": {
-        "axios": "^0.27.2"
+        "axios": "^0.27.2",
+        "dotenv": "^16.0.1"
     },
     "devDependencies": {
-        "dotenv": "^16.0.1",
         "eslint": "^8.16.0",
         "eslint-config-airbnb-base": "^15.0.0",
         "eslint-config-prettier": "^8.5.0",
