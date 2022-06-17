@@ -1,6 +1,6 @@
 {
     "name": "@s1seven/node-red-s1seven-api",
-    "version": "1.1.0",
+    "version": "1.0.1",
     "description": "Nodes that interact with S1Seven's API",
     "scripts": {
         "test": "jest",
